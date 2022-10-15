@@ -1,5 +1,7 @@
 package config
 
+import "github.com/nuttchai/go-rest/internal/repositories"
+
 type APIConfig struct {
 	Port string
 	Env  string
@@ -10,5 +12,5 @@ type APIConfig struct {
 
 type AppConfig struct {
 	APIConfig APIConfig
-	// Models    repositories.Models
+	Models    repositories.Models
 }
