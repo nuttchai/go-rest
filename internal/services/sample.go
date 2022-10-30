@@ -41,7 +41,7 @@ func (s *sampleService) UpdateSample(sample *models.Sample) error {
 		return err
 	}
 
-	return db.CheckRowsAffected(result)
+	return validators.CheckRowsAffected(result)
 }
 
 func (s *sampleService) DeleteSample(id string) error {
@@ -50,7 +50,7 @@ func (s *sampleService) DeleteSample(id string) error {
 		return err
 	}
 
-	return db.CheckRowsAffected(result)
+	return validators.CheckRowsAffected(result)
 }
 
 func (s *sampleService) EmptySampleDesc(id string) error {
@@ -59,5 +59,5 @@ func (s *sampleService) EmptySampleDesc(id string) error {
 		return err
 	}
 
-	return db.CheckRowsAffected(result)
+	return validators.CheckRowsAffected(result)
 }
