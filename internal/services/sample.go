@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/nuttchai/go-rest/internal/models"
-	"github.com/nuttchai/go-rest/internal/utils/db"
+	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 
 type sampleService struct {
