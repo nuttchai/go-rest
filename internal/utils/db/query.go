@@ -13,7 +13,8 @@ func BuildQueryWithFilter(
 ) (string, []interface{}) {
 	if len(filters) > 0 {
 		for index, filter := range filters {
-			query += " and " + filter.Key + " = $" + strconv.Itoa(index+2)
+			indexFilter := index + 2
+			query += " and " + filter.Key + " = $" + strconv.Itoa(indexFilter)
 			args = append(args, filter.Value)
 		}
 	}
