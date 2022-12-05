@@ -3,16 +3,22 @@ package repositories
 import (
 	"database/sql"
 
+	"github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
+	"github.com/nuttchai/go-rest/internal/utils/db"
 )
 
-func (m *DBModel) GetSample(id string) (*models.Sample, error) {
+func (m *DBModel) GetSample(id string, filters ...*types.QueryFilter) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
-	query := `select * from samples where id = $1`
-	row := m.SqlDB.QueryRowContext(ctx, query, id)
+	baseQuery := "select * from samples where id = $1"
+	baseArgs := []interface{}{id}
+
+	query, args := db.BuildQueryWithFilter(baseQuery, baseArgs, filters...)
+	row := m.SqlDB.QueryRowContext(ctx, query, args...)
 
 	var sample models.Sample
 	err := row.Scan(
@@ -23,7 +29,7 @@ func (m *DBModel) GetSample(id string) (*models.Sample, error) {
 	return &sample, err
 }
 
-func (m *DBModel) CreateSample(s *models.NewSample) (int, error) {
+func (m *DBModel) CreateSample(s *sample.CreateSampleDTO) (int, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -38,7 +44,7 @@ func (m *DBModel) CreateSample(s *models.NewSample) (int, error) {
 	return id, err
 }
 
-func (m *DBModel) UpdateSample(s *models.Sample) (sql.Result, error) {
+func (m *DBModel) UpdateSample(s *sample.UpdateSampleDTO) (sql.Result, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
