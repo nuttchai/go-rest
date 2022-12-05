@@ -5,11 +5,10 @@ const (
 	DefaultAPIErrorMsg   = "Something went wrong"
 
 	// Sample Service
-	GetSampleSuccessMsg       = "Get sample successfully"
-	CreateSampleSuccessMsg    = "Create sample successfully"
-	UpdateSampleSuccessMsg    = "Update sample successfully"
-	EmptySampleDescSuccessMsg = "Empty sample description successfully"
-	DeleteSampleSuccessMsg    = "Delete sample successfully"
+	GetSampleSuccessMsg    = "Get sample successfully"
+	CreateSampleSuccessMsg = "Create sample successfully"
+	UpdateSampleSuccessMsg = "Update sample successfully"
+	DeleteSampleSuccessMsg = "Delete sample successfully"
 
 	// Common
 	DecodingJSONError       = "Decoding JSON Error"
