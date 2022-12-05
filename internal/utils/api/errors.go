@@ -36,3 +36,11 @@ func NotFoundError(err error) *APIError {
 		Error:   err.Error(),
 	}
 }
+
+func BadRequestError(err error) *APIError {
+	return &APIError{
+		Status:  400,
+		Message: "BadRequestError",
+		Error:   err.Error(),
+	}
+}

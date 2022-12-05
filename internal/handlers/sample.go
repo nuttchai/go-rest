@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
@@ -49,6 +50,12 @@ func (h *sampleHandler) CreateSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
+	validate := validator.New()
+	if err := validate.Struct(sampleDto); err != nil {
+		jsonErr := api.BadRequestError(err)
+		return c.JSON(jsonErr.Status, jsonErr)
+	}
+
 	createdSample, err := services.SampleService.CreateSample(sampleDto)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
@@ -64,6 +71,12 @@ func (h *sampleHandler) UpdateSample(c echo.Context) error {
 	err := json.NewDecoder(c.Request().Body).Decode(&sampleDto)
 	if err != nil {
 		jsonErr := api.CustomError(err, 500, constants.DecodingJSONError)
+		return c.JSON(jsonErr.Status, jsonErr)
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(sampleDto); err != nil {
+		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
