@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+  db:
+    image: postgres:13.1
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    container_name: db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      APP_DB_USER: postgres
+      APP_DB_PASS: postgres
+      APP_DB_NAME: shopping
+    volumes:
+      # [+] point data to local folder for persistent data
+      - ./external/database/volumes/data:/var/lib/postgresql/data
+      # [+] point to your backup for data restoration
+      - ./external/database/volumes/db_backup:/db_backup
+      # [+] point docker to directory with your config
+      # - ./external/database/db_config:/db_config
+      # [+] point to your postgres init scripts (folder or file)
+      # docker-entrypoint-initdb.d normally only accepy .sql file to be executed
+      # otherwise, it returns permission denied
+      - ./external/database/scripts:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    networks:
+      - shopping
+
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   links:
+  #     - db
+  #   networks:
+  #     - shopping
+
+networks:
+  shopping:
