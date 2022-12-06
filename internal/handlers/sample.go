@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 
-	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
@@ -11,6 +10,7 @@ import (
 	"github.com/nuttchai/go-rest/internal/services"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
+	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 
 type sampleHandler struct{}
@@ -50,8 +50,7 @@ func (h *sampleHandler) CreateSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(sampleDto); err != nil {
+	if err := validators.ValidateStruct(sampleDto); err != nil {
 		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
@@ -74,8 +73,7 @@ func (h *sampleHandler) UpdateSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(sampleDto); err != nil {
+	if err := validators.ValidateStruct(sampleDto); err != nil {
 		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
