@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
-
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
@@ -10,7 +8,6 @@ import (
 	"github.com/nuttchai/go-rest/internal/services"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
-	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 
 type sampleHandler struct{}
@@ -44,13 +41,7 @@ func (h *sampleHandler) GetSample(c echo.Context) error {
 
 func (h *sampleHandler) CreateSample(c echo.Context) error {
 	var sampleDto *sampledto.CreateSampleDTO
-	err := json.NewDecoder(c.Request().Body).Decode(&sampleDto)
-	if err != nil {
-		jsonErr := api.CustomError(err, 500, constants.DecodingJSONError)
-		return c.JSON(jsonErr.Status, jsonErr)
-	}
-
-	if err := validators.ValidateStruct(sampleDto); err != nil {
+	if err := api.DecodeDTO(c, &sampleDto); err != nil {
 		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
@@ -66,19 +57,13 @@ func (h *sampleHandler) CreateSample(c echo.Context) error {
 }
 
 func (h *sampleHandler) UpdateSample(c echo.Context) error {
-	var sampleDto *sampledto.UpdateSampleDTO
-	err := json.NewDecoder(c.Request().Body).Decode(&sampleDto)
-	if err != nil {
-		jsonErr := api.CustomError(err, 500, constants.DecodingJSONError)
-		return c.JSON(jsonErr.Status, jsonErr)
-	}
-
-	if err := validators.ValidateStruct(sampleDto); err != nil {
+	var sampleDto sampledto.UpdateSampleDTO
+	if err := api.DecodeDTO(c, &sampleDto); err != nil {
 		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	updatedSample, err := services.SampleService.UpdateSample(sampleDto)
+	updatedSample, err := services.SampleService.UpdateSample(&sampleDto)
 	if err != nil {
 		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constants.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)
