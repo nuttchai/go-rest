@@ -9,7 +9,7 @@ import (
 	"github.com/nuttchai/go-rest/internal/utils/env"
 )
 
-func InitAPIConfig(apiConfig *APIConfig) error {
+func InitEnv(apiConfig *APIConfig) error {
 	// Load Environment Variables
 	appEnv := env.GetEnv("APP_ENV", "development")
 	envDefaultDir, err := env.GetDefaultEnvDir(appEnv)

@@ -19,7 +19,7 @@ var apiConfig config.APIConfig
 func Client() {
 	// Add the Configuration into ApiConfig
 	console.App.Log("Loading App Configuration...")
-	err := config.InitAPIConfig(&apiConfig)
+	err := config.InitEnv(&apiConfig)
 	if err != nil {
 		console.App.Fatalf("Error Loading Root Directory (Error: %s)", err.Error())
 	}
