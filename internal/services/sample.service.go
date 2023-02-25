@@ -10,15 +10,8 @@ type sampleService struct {
 	repo *Repository
 }
 
-type sampleServiceInterface interface {
-	GetSample(id string) (*models.Sample, error)
-	CreateSample(sample *sampledto.CreateSampleDTO) (*models.Sample, error)
-	UpdateSample(sample *sampledto.UpdateSampleDTO) (*models.Sample, error)
-	DeleteSample(id string) error
-}
-
 var (
-	SampleService sampleServiceInterface
+	SampleService ISampleService
 )
 
 func init() {
