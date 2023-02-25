@@ -12,15 +12,8 @@ import (
 
 type sampleHandler struct{}
 
-type sampleHandlerInterface interface {
-	GetSample(c echo.Context) error
-	CreateSample(c echo.Context) error
-	UpdateSample(c echo.Context) error
-	DeleteSample(c echo.Context) error
-}
-
 var (
-	SampleHandler sampleHandlerInterface
+	SampleHandler ISampleHandler
 )
 
 func init() {
