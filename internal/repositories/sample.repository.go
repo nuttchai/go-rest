@@ -3,12 +3,24 @@ package repositories
 import (
 	"database/sql"
 
-	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
+	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/models"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 	"github.com/nuttchai/go-rest/internal/utils/db"
 )
+
+var (
+	SampleRepository ISampleRepository
+)
+
+func init() {
+	SampleRepository = &DBModel{}
+}
+
+func (m *DBModel) Test() string {
+	return "test"
+}
 
 func (m *DBModel) GetSample(id string, filters ...*types.QueryFilter) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
@@ -29,7 +41,7 @@ func (m *DBModel) GetSample(id string, filters ...*types.QueryFilter) (*models.S
 	return &sample, err
 }
 
-func (m *DBModel) CreateSample(s *sampledto.CreateSampleDTO) (*models.Sample, error) {
+func (m *DBModel) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -38,21 +50,21 @@ func (m *DBModel) CreateSample(s *sampledto.CreateSampleDTO) (*models.Sample, er
 		values ($1, $2)
 		returning *
 	`
-	row := m.SqlDB.QueryRowContext(ctx, query, s.Name, s.Desc)
+	row := m.SqlDB.QueryRowContext(ctx, query, sample.Name, sample.Desc)
 
-	var sample models.Sample
+	var newSample models.Sample
 	if err := row.Scan(
-		&sample.Id,
-		&sample.Name,
-		&sample.Desc,
+		&newSample.Id,
+		&newSample.Name,
+		&newSample.Desc,
 	); err != nil {
 		return nil, err
 	}
 
-	return &sample, nil
+	return &newSample, nil
 }
 
-func (m *DBModel) UpdateSample(s *sampledto.UpdateSampleDTO) (*models.Sample, error) {
+func (m *DBModel) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -61,18 +73,18 @@ func (m *DBModel) UpdateSample(s *sampledto.UpdateSampleDTO) (*models.Sample, er
 		where id = $3
 		returning *
 	`
-	row := m.SqlDB.QueryRowContext(ctx, query, s.Name, s.Desc, s.Id)
+	row := m.SqlDB.QueryRowContext(ctx, query, sample.Name, sample.Desc, sample.Id)
 
-	var sample models.Sample
+	var updatedSample models.Sample
 	if err := row.Scan(
-		&sample.Id,
-		&sample.Name,
-		&sample.Desc,
+		&updatedSample.Id,
+		&updatedSample.Name,
+		&updatedSample.Desc,
 	); err != nil {
 		return nil, err
 	}
 
-	return &sample, nil
+	return &updatedSample, nil
 }
 
 func (m *DBModel) DeleteSample(id string) (sql.Result, error) {
