@@ -20,6 +20,12 @@ func init() {
 	SampleHandler = &sampleHandler{}
 }
 
+func (h *sampleHandler) Test(c echo.Context) error {
+	resultTest := services.SampleService.Test()
+	res := api.SuccessResponse(resultTest, constants.TestSuccessMsg)
+	return c.JSON(200, res)
+}
+
 func (h *sampleHandler) GetSample(c echo.Context) error {
 	id := c.Param("id")
 	sample, err := services.SampleService.GetSample(id)

@@ -7,6 +7,7 @@ import (
 )
 
 func initSampleRouterPath(e *echo.Echo) *echo.Echo {
+	e.GET(api.CreatePath("sample"), handlers.SampleHandler.Test)
 	e.GET(api.CreatePath("sample/:id"), handlers.SampleHandler.GetSample)
 
 	e.POST(api.CreatePath("sample"), handlers.SampleHandler.CreateSample)
@@ -14,6 +15,5 @@ func initSampleRouterPath(e *echo.Echo) *echo.Echo {
 	e.PUT(api.CreatePath("sample/:id"), handlers.SampleHandler.UpdateSample)
 
 	e.DELETE(api.CreatePath("sample/:id"), handlers.SampleHandler.DeleteSample)
-
 	return e
 }

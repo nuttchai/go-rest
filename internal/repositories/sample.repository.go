@@ -5,6 +5,7 @@ import (
 
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/shared/console"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 	"github.com/nuttchai/go-rest/internal/utils/db"
@@ -19,6 +20,7 @@ func init() {
 }
 
 func (m *DBModel) Test() string {
+	console.App.Log("Call Test Function in Repository!")
 	return "test"
 }
 
