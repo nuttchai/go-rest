@@ -1,6 +1,10 @@
 package api
 
-import "github.com/nuttchai/go-rest/internal/constants"
+import (
+	"net/http"
+
+	"github.com/nuttchai/go-rest/internal/constants"
+)
 
 type APIError struct {
 	Status  int    `json:"status"`
@@ -23,7 +27,7 @@ func CustomError(err error, status int, message ...string) *APIError {
 
 func InternalServerError(err error) *APIError {
 	return &APIError{
-		Status:  500,
+		Status:  http.StatusInternalServerError,
 		Message: "InternalServerError",
 		Error:   err.Error(),
 	}
@@ -31,7 +35,7 @@ func InternalServerError(err error) *APIError {
 
 func NotFoundError(err error) *APIError {
 	return &APIError{
-		Status:  404,
+		Status:  http.StatusNotFound,
 		Message: "NotFoundError",
 		Error:   err.Error(),
 	}
@@ -39,7 +43,7 @@ func NotFoundError(err error) *APIError {
 
 func BadRequestError(err error) *APIError {
 	return &APIError{
-		Status:  400,
+		Status:  http.StatusBadRequest,
 		Message: "BadRequestError",
 		Error:   err.Error(),
 	}

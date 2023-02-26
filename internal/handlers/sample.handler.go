@@ -32,7 +32,7 @@ func InitSampleHandler() ISampleHandler {
 func (h *TSampleHandler) Test(c echo.Context) error {
 	resultTest := h.sampleService.Test()
 	res := api.SuccessResponse(resultTest, constants.TestSuccessMsg)
-	return c.JSON(200, res)
+	return c.JSON(res.Status, res)
 }
 
 func (h *TSampleHandler) GetSample(c echo.Context) error {

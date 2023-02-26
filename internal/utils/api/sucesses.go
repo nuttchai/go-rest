@@ -1,6 +1,10 @@
 package api
 
-import "github.com/nuttchai/go-rest/internal/constants"
+import (
+	"net/http"
+
+	"github.com/nuttchai/go-rest/internal/constants"
+)
 
 type APISuccess struct {
 	Status  int         `json:"status"`
@@ -15,7 +19,7 @@ func SuccessResponse(result interface{}, message ...string) *APISuccess {
 	}
 
 	return &APISuccess{
-		Status:  200,
+		Status:  http.StatusOK,
 		Message: msg,
 		Result:  result,
 	}
