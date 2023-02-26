@@ -71,7 +71,7 @@ func initSqlDB(cfg *types.APIConfig) (*sql.DB, error) {
 }
 
 func initRouters(e *echo.Echo) *echo.Echo {
-	routers.InitSampleAPI(e)
+	routers.InitSampleRouter(e)
 
 	return e
 }
