@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/labstack/echo"
+	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/models"
 	"github.com/stretchr/testify/assert"
@@ -13,7 +15,6 @@ import (
 
 var (
 	e                *echo.Echo
-	req              *http.Request
 	testMock         func() string
 	getSampleMock    func(id string) (*models.Sample, error)
 	createSampleMock func(sample *sampledto.CreateSampleDTO) (*models.Sample, error)
@@ -52,28 +53,32 @@ func (*TUserServiceMock) GetUser(id string) (*models.User, error) {
 
 func init() {
 	e = echo.New()
-	req = httptest.NewRequest(echo.GET, "http://localhost:8000", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 }
 
-func InitSampleServiceMock() {
+func setUpRequest(method string, subPath string) *http.Request {
+	path := constants.LocalHost + constants.BasePath + subPath
+	req := httptest.NewRequest(method, path, nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	return req
+}
+
+func initSampleServiceMock() {
 	SampleHandler = &TSampleHandler{
 		sampleService: &TSampleServiceMock{},
 		userService:   &TUserServiceMock{},
 	}
 }
 
-func TestSampleHandlerTestReturn(t *testing.T) {
+func TestTestReturn(t *testing.T) {
 	// Arrange
 	testMock = func() string {
 		return "test"
 	}
-	InitSampleServiceMock()
+	initSampleServiceMock()
 
 	rec := httptest.NewRecorder()
-
+	req := setUpRequest(echo.GET, "/sample")
 	c := e.NewContext(req, rec)
-	c.SetPath("/sample")
 
 	// Act
 	err := SampleHandler.Test(c)
@@ -83,7 +88,7 @@ func TestSampleHandlerTestReturn(t *testing.T) {
 	assert.EqualValues(t, http.StatusOK, rec.Code)
 }
 
-func TestSampleHandlerGetSampleReturn(t *testing.T) {
+func TestGetSampleReturn(t *testing.T) {
 	// Arrange
 	getSampleMock = func(id string) (*models.Sample, error) {
 		return &models.Sample{
@@ -99,15 +104,12 @@ func TestSampleHandlerGetSampleReturn(t *testing.T) {
 			Username: "username",
 		}, nil
 	}
-
-	InitSampleServiceMock()
+	initSampleServiceMock()
 
 	rec := httptest.NewRecorder()
+	req := setUpRequest(echo.GET, "/sample/1")
 
 	c := e.NewContext(req, rec)
-	c.SetPath("/sample/:id")
-	c.SetParamNames("id")
-	c.SetParamValues("1")
 
 	// Act
 	err := SampleHandler.GetSample(c)
@@ -117,4 +119,52 @@ func TestSampleHandlerGetSampleReturn(t *testing.T) {
 	assert.EqualValues(t, http.StatusOK, rec.Code)
 	assert.EqualValues(t, "{\"status\":200,\"message\":\"Get sample successfully\",\"result\":{\"id\":1,\"name\":\"sample\",\"description\":\"description\",\"owner\":\"username\"}}\n",
 		rec.Body.String())
+}
+
+func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
+	// Arrange
+	getSampleMock = func(id string) (*models.Sample, error) {
+		return nil, errors.New("error")
+	}
+	initSampleServiceMock()
+
+	rec := httptest.NewRecorder()
+	req := setUpRequest(echo.GET, "/sample/1")
+
+	c := e.NewContext(req, rec)
+
+	// Act
+	err := SampleHandler.GetSample(c)
+
+	// Assert
+	assert.Nil(t, err)
+	assert.EqualValues(t, http.StatusInternalServerError, rec.Code)
+}
+
+func TestGetSampleReturnErrorFromGetUser(t *testing.T) {
+	// Arrange
+	getSampleMock = func(id string) (*models.Sample, error) {
+		return &models.Sample{
+			Id:          1,
+			Name:        "sample",
+			Description: "description",
+			OwnerId:     1,
+		}, nil
+	}
+	getUserMock = func(id string) (*models.User, error) {
+		return nil, errors.New("error")
+	}
+	initSampleServiceMock()
+
+	rec := httptest.NewRecorder()
+	req := setUpRequest(echo.GET, "/sample/1")
+
+	c := e.NewContext(req, rec)
+
+	// Act
+	err := SampleHandler.GetSample(c)
+
+	// Assert
+	assert.Nil(t, err)
+	assert.EqualValues(t, http.StatusInternalServerError, rec.Code)
 }
