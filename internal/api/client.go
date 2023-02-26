@@ -12,6 +12,9 @@ import (
 	"github.com/nuttchai/go-rest/internal/types"
 )
 
+func init() {
+
+}
 func Client() {
 	// Add the Configuration into ApiConfig
 	console.App.Log("Loading App Configuration...")
@@ -37,11 +40,11 @@ func Client() {
 	}
 	config.SetAppConfig(appConfig)
 
-	// Initialize Routers
-	console.App.Logf("Initializing Routers...")
+	// Initialize App
+	console.App.Logf("Initializing the Application...")
 	e := echo.New()
 	middleware.EnableCORS(e)
-	initRouters(e)
+	initApp(e)
 
 	// Start Server
 	console.App.Logf("Starting Server...")

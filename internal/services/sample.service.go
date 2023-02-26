@@ -15,13 +15,6 @@ var (
 	SampleService ISampleService
 )
 
-func InitSampleService() ISampleService {
-	SampleService = &TSampleService{
-		repository: repositories.InitSampleRepository(),
-	}
-	return SampleService
-}
-
 func (s *TSampleService) Test() string {
 	return s.repository.Test()
 }

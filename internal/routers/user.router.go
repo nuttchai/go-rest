@@ -6,8 +6,6 @@ import (
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )
 
-func InitUserRouter(e *echo.Echo) {
-	handlers.InitUserHandler()
-
+func initUserRouter(e *echo.Echo) {
 	e.GET(api.CreatePath("user/:id"), handlers.UserHandler.GetUser)
 }

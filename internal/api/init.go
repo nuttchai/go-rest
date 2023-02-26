@@ -6,7 +6,10 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
+	"github.com/nuttchai/go-rest/internal/handlers"
+	"github.com/nuttchai/go-rest/internal/repositories"
 	"github.com/nuttchai/go-rest/internal/routers"
+	"github.com/nuttchai/go-rest/internal/services"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 	"github.com/nuttchai/go-rest/internal/utils/env"
@@ -70,9 +73,16 @@ func initSqlDB(cfg *types.TAPIConfig) (*sql.DB, error) {
 	return db, nil
 }
 
-func initRouters(e *echo.Echo) *echo.Echo {
-	routers.InitUserRouter(e)
-	routers.InitSampleRouter(e)
+func initApp(e *echo.Echo) {
+	// Initialize Repositories
+	repositories.Init()
 
-	return e
+	// Initialize Services
+	services.Init()
+
+	// Initialize Handlers
+	handlers.Init()
+
+	// Initialize Routers
+	routers.Init(e)
 }

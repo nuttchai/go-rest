@@ -15,13 +15,6 @@ var (
 	UserHandler IUserHandler
 )
 
-func InitUserHandler() IUserHandler {
-	UserHandler = &TUserHandler{
-		userService: services.InitUserService(),
-	}
-	return UserHandler
-}
-
 func (h *TUserHandler) GetUser(c echo.Context) error {
 	id := c.Param("id")
 	user, err := h.userService.GetUser(id)

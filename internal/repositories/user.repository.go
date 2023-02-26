@@ -4,7 +4,6 @@ import (
 	"database/sql"
 
 	"github.com/nuttchai/go-rest/internal/models"
-	"github.com/nuttchai/go-rest/internal/shared/config"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 )
 
@@ -15,13 +14,6 @@ type TUserRepository struct {
 var (
 	UserRepository IUserRepository
 )
-
-func InitUserRepository() IUserRepository {
-	UserRepository = &TUserRepository{
-		DB: config.GetAppDB(),
-	}
-	return UserRepository
-}
 
 func (m *TUserRepository) GetUser(id string) (*models.User, error) {
 	ctx, cancel := context.WithTimeout(3)

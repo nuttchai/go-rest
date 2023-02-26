@@ -21,14 +21,6 @@ var (
 	SampleHandler ISampleHandler
 )
 
-func InitSampleHandler() ISampleHandler {
-	SampleHandler = &TSampleHandler{
-		sampleService: services.InitSampleService(),
-		userService:   services.InitUserService(),
-	}
-	return SampleHandler
-}
-
 func (h *TSampleHandler) Test(c echo.Context) error {
 	resultTest := h.sampleService.Test()
 	res := api.SuccessResponse(resultTest, constants.TestSuccessMsg)
