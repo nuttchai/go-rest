@@ -3,41 +3,43 @@ package services
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/repositories"
 	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 
-type sampleService struct {
-	repo *Repository
+type TSampleService struct {
+	repository repositories.ISampleRepository
 }
 
 var (
 	SampleService ISampleService
 )
 
-func init() {
-	SampleService = &sampleService{
-		repo: &repo,
+func InitSampleService() ISampleService {
+	SampleService = &TSampleService{
+		repository: repositories.InitSampleRepository(),
 	}
+	return SampleService
 }
 
-func (s *sampleService) Test() string {
-	return s.repo.Models.DB.Test()
+func (s *TSampleService) Test() string {
+	return s.repository.Test()
 }
 
-func (s *sampleService) GetSample(id string) (*models.Sample, error) {
-	return s.repo.Models.DB.GetSample(id)
+func (s *TSampleService) GetSample(id string) (*models.Sample, error) {
+	return s.repository.GetSample(id)
 }
 
-func (s *sampleService) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
-	return s.repo.Models.DB.CreateSample(sample)
+func (s *TSampleService) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
+	return s.repository.CreateSample(sample)
 }
 
-func (s *sampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
-	return s.repo.Models.DB.UpdateSample(sample)
+func (s *TSampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
+	return s.repository.UpdateSample(sample)
 }
 
-func (s *sampleService) DeleteSample(id string) error {
-	result, err := s.repo.Models.DB.DeleteSample(id)
+func (s *TSampleService) DeleteSample(id string) error {
+	result, err := s.repository.DeleteSample(id)
 	if err != nil {
 		return err
 	}

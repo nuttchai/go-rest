@@ -5,28 +5,25 @@ import (
 
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq"
-	"github.com/nuttchai/go-rest/internal/config"
 	"github.com/nuttchai/go-rest/internal/middleware"
-	"github.com/nuttchai/go-rest/internal/repositories"
-	"github.com/nuttchai/go-rest/internal/routers"
-	"github.com/nuttchai/go-rest/internal/services"
+	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/shared/config"
 	"github.com/nuttchai/go-rest/internal/shared/console"
+	"github.com/nuttchai/go-rest/internal/types"
 )
-
-var appConfig *config.AppConfig
-var apiConfig config.APIConfig
 
 func Client() {
 	// Add the Configuration into ApiConfig
 	console.App.Log("Loading App Configuration...")
-	err := config.InitEnv(&apiConfig)
+	apiConfig, err := initEnv()
 	if err != nil {
 		console.App.Fatalf("Error Loading Root Directory (Error: %s)", err.Error())
 	}
+	config.SetAPIConfig(apiConfig)
 
 	// Establish Database Connection
 	console.App.Log("Connecting Database...")
-	db, err := config.InitSqlDB(&apiConfig)
+	db, err := initSqlDB(config.GetAPIConfig())
 	if err != nil {
 		console.App.Fatalf("Database Connection Failed (Error: %s)", err.Error())
 	}
@@ -34,25 +31,21 @@ func Client() {
 	defer db.Close()
 
 	// Add the Configuration into AppConfig
-	appConfig = &config.AppConfig{
-		APIConfig: apiConfig,
-		Models:    repositories.InitModels(db),
+	appConfig := &types.AppConfig{
+		APIConfig: *config.GetAPIConfig(),
+		Models:    models.Init(db),
 	}
-
-	// Initialize Services
-	console.App.Logf("Initializing Services...")
-	repo := services.InitRepo(appConfig)
-	services.InitServices(repo)
+	config.SetAppConfig(appConfig)
 
 	// Initialize Routers
 	console.App.Logf("Initializing Routers...")
 	e := echo.New()
 	middleware.EnableCORS(e)
-	routers.InitRouters(e)
+	initRouters(e)
 
 	// Start Server
 	console.App.Logf("Starting Server...")
-	serverPort := fmt.Sprintf(":%s", apiConfig.Port)
+	serverPort := fmt.Sprintf(":%s", config.GetAPIPort())
 	if err := e.Start(serverPort); err != nil {
 		console.App.Fatalf("Server Start Failed (Error: %s)", err.Error())
 	}

@@ -1,20 +1,25 @@
-package config
+package internal
 
 import (
 	"database/sql"
 	"flag"
 	"fmt"
 
+	"github.com/labstack/echo"
+	"github.com/nuttchai/go-rest/internal/routers"
+	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 	"github.com/nuttchai/go-rest/internal/utils/env"
 )
 
-func InitEnv(apiConfig *APIConfig) error {
+func initEnv() (*types.APIConfig, error) {
+	apiConfig := &types.APIConfig{}
+
 	// Load Environment Variables
 	appEnv := env.GetEnv("APP_ENV", "development")
 	envDefaultDir, err := env.GetDefaultEnvDir(appEnv)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	envDir := env.GetEnv("ENV_PATH", envDefaultDir)
@@ -45,10 +50,10 @@ func InitEnv(apiConfig *APIConfig) error {
 	flag.StringVar(&apiConfig.Db.Driver, "driver", dbDriver, "Database Driver")
 	flag.Parse()
 
-	return nil
+	return apiConfig, nil
 }
 
-func InitSqlDB(cfg *APIConfig) (*sql.DB, error) {
+func initSqlDB(cfg *types.APIConfig) (*sql.DB, error) {
 	db, err := sql.Open(cfg.Db.Driver, cfg.Db.Dsn)
 	if err != nil {
 		return nil, err
@@ -63,4 +68,10 @@ func InitSqlDB(cfg *APIConfig) (*sql.DB, error) {
 	}
 
 	return db, nil
+}
+
+func initRouters(e *echo.Echo) *echo.Echo {
+	routers.InitSampleAPI(e)
+
+	return e
 }

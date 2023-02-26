@@ -6,14 +6,16 @@ import (
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )
 
-func initSampleRouterPath(e *echo.Echo) *echo.Echo {
-	e.GET(api.CreatePath("sample"), handlers.SampleHandler.Test)
-	e.GET(api.CreatePath("sample/:id"), handlers.SampleHandler.GetSample)
+func InitSampleAPI(e *echo.Echo) *echo.Echo {
+	handler := handlers.InitSampleHandler()
 
-	e.POST(api.CreatePath("sample"), handlers.SampleHandler.CreateSample)
+	e.GET(api.CreatePath("sample"), handler.Test)
+	e.GET(api.CreatePath("sample/:id"), handler.GetSample)
 
-	e.PUT(api.CreatePath("sample/:id"), handlers.SampleHandler.UpdateSample)
+	e.POST(api.CreatePath("sample"), handler.CreateSample)
 
-	e.DELETE(api.CreatePath("sample/:id"), handlers.SampleHandler.DeleteSample)
+	e.PUT(api.CreatePath("sample/:id"), handler.UpdateSample)
+
+	e.DELETE(api.CreatePath("sample/:id"), handler.DeleteSample)
 	return e
 }

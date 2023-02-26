@@ -10,25 +10,30 @@ import (
 	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
 )
 
-type sampleHandler struct{}
+type TSampleHandler struct {
+	sampleService services.ISampleService
+}
 
 var (
 	SampleHandler ISampleHandler
 )
 
-func init() {
-	SampleHandler = &sampleHandler{}
+func InitSampleHandler() ISampleHandler {
+	SampleHandler = &TSampleHandler{
+		sampleService: services.InitSampleService(),
+	}
+	return SampleHandler
 }
 
-func (h *sampleHandler) Test(c echo.Context) error {
-	resultTest := services.SampleService.Test()
+func (h *TSampleHandler) Test(c echo.Context) error {
+	resultTest := h.sampleService.Test()
 	res := api.SuccessResponse(resultTest, constants.TestSuccessMsg)
 	return c.JSON(200, res)
 }
 
-func (h *sampleHandler) GetSample(c echo.Context) error {
+func (h *TSampleHandler) GetSample(c echo.Context) error {
 	id := c.Param("id")
-	sample, err := services.SampleService.GetSample(id)
+	sample, err := h.sampleService.GetSample(id)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
@@ -38,14 +43,14 @@ func (h *sampleHandler) GetSample(c echo.Context) error {
 	return c.JSON(res.Status, res)
 }
 
-func (h *sampleHandler) CreateSample(c echo.Context) error {
+func (h *TSampleHandler) CreateSample(c echo.Context) error {
 	var sampleDto *sampledto.CreateSampleDTO
 	if err := api.DecodeDTO(c, &sampleDto); err != nil {
 		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	createdSample, err := services.SampleService.CreateSample(sampleDto)
+	createdSample, err := h.sampleService.CreateSample(sampleDto)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
@@ -55,14 +60,14 @@ func (h *sampleHandler) CreateSample(c echo.Context) error {
 	return c.JSON(res.Status, res)
 }
 
-func (h *sampleHandler) UpdateSample(c echo.Context) error {
+func (h *TSampleHandler) UpdateSample(c echo.Context) error {
 	var sampleDto sampledto.UpdateSampleDTO
 	if err := api.DecodeDTO(c, &sampleDto); err != nil {
 		jsonErr := api.BadRequestError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	updatedSample, err := services.SampleService.UpdateSample(&sampleDto)
+	updatedSample, err := h.sampleService.UpdateSample(&sampleDto)
 	if err != nil {
 		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constants.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)
@@ -72,9 +77,9 @@ func (h *sampleHandler) UpdateSample(c echo.Context) error {
 	return c.JSON(res.Status, res)
 }
 
-func (h *sampleHandler) DeleteSample(c echo.Context) error {
+func (h *TSampleHandler) DeleteSample(c echo.Context) error {
 	id := c.Param("id")
-	err := services.SampleService.DeleteSample(id)
+	err := h.sampleService.DeleteSample(id)
 	if err != nil {
 		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constants.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)

@@ -1,6 +1,8 @@
-package config
+package types
 
-import "github.com/nuttchai/go-rest/internal/repositories"
+import (
+	"github.com/nuttchai/go-rest/internal/models"
+)
 
 type APIConfig struct {
 	Port string
@@ -13,5 +15,5 @@ type APIConfig struct {
 
 type AppConfig struct {
 	APIConfig APIConfig
-	Models    repositories.Models
+	Models    models.Models
 }
