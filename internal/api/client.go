@@ -31,7 +31,7 @@ func Client() {
 	defer db.Close()
 
 	// Add the Configuration into AppConfig
-	appConfig := &types.AppConfig{
+	appConfig := &types.TAppConfig{
 		APIConfig: *config.GetAPIConfig(),
 		Models:    models.Init(db),
 	}

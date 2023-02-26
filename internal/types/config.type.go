@@ -4,7 +4,7 @@ import (
 	"github.com/nuttchai/go-rest/internal/models"
 )
 
-type APIConfig struct {
+type TAPIConfig struct {
 	Port string
 	Env  string
 	Db   struct {
@@ -13,7 +13,7 @@ type APIConfig struct {
 	}
 }
 
-type AppConfig struct {
-	APIConfig APIConfig
+type TAppConfig struct {
+	APIConfig TAPIConfig
 	Models    models.Models
 }

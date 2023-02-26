@@ -12,8 +12,8 @@ import (
 	"github.com/nuttchai/go-rest/internal/utils/env"
 )
 
-func initEnv() (*types.APIConfig, error) {
-	apiConfig := &types.APIConfig{}
+func initEnv() (*types.TAPIConfig, error) {
+	apiConfig := &types.TAPIConfig{}
 
 	// Load Environment Variables
 	appEnv := env.GetEnv("APP_ENV", "development")
@@ -53,7 +53,7 @@ func initEnv() (*types.APIConfig, error) {
 	return apiConfig, nil
 }
 
-func initSqlDB(cfg *types.APIConfig) (*sql.DB, error) {
+func initSqlDB(cfg *types.TAPIConfig) (*sql.DB, error) {
 	db, err := sql.Open(cfg.Db.Driver, cfg.Db.Dsn)
 	if err != nil {
 		return nil, err

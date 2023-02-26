@@ -32,7 +32,7 @@ func (m *TSampleRepository) Test() string {
 	return "test"
 }
 
-func (m *TSampleRepository) GetSample(id string, filters ...*types.QueryFilter) (*models.Sample, error) {
+func (m *TSampleRepository) GetSample(id string, filters ...*types.TQueryFilter) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 

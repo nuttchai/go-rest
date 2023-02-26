@@ -1,6 +1,6 @@
 package types
 
-type QueryFilter struct {
+type TQueryFilter struct {
 	Field    string
 	Operator string
 	Value    string

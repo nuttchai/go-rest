@@ -10,7 +10,7 @@ import (
 
 type ISampleRepository interface {
 	Test() string
-	GetSample(id string, filters ...*types.QueryFilter) (*models.Sample, error)
+	GetSample(id string, filters ...*types.TQueryFilter) (*models.Sample, error)
 	CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error)
 	UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error)
 	DeleteSample(id string) (sql.Result, error)

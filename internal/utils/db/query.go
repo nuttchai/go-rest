@@ -11,7 +11,7 @@ import (
 func BuildQueryWithFilter(
 	query string,
 	args []interface{},
-	filters ...*types.QueryFilter,
+	filters ...*types.TQueryFilter,
 ) (string, []interface{}) {
 	argsIndex := len(args) + 1
 
