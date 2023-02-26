@@ -7,14 +7,14 @@ import (
 )
 
 func InitSampleRouter(e *echo.Echo) {
-	handler := handlers.InitSampleHandler()
+	handlers.InitSampleHandler()
 
-	e.GET(api.CreatePath("sample"), handler.Test)
-	e.GET(api.CreatePath("sample/:id"), handler.GetSample)
+	e.GET(api.CreatePath("sample"), handlers.SampleHandler.Test)
+	e.GET(api.CreatePath("sample/:id"), handlers.SampleHandler.GetSample)
 
-	e.POST(api.CreatePath("sample"), handler.CreateSample)
+	e.POST(api.CreatePath("sample"), handlers.SampleHandler.CreateSample)
 
-	e.PUT(api.CreatePath("sample"), handler.UpdateSample)
+	e.PUT(api.CreatePath("sample"), handlers.SampleHandler.UpdateSample)
 
-	e.DELETE(api.CreatePath("sample/:id"), handler.DeleteSample)
+	e.DELETE(api.CreatePath("sample/:id"), handlers.SampleHandler.DeleteSample)
 }

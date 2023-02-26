@@ -7,7 +7,7 @@ import (
 )
 
 func InitUserRouter(e *echo.Echo) {
-	handler := handlers.InitUserHandler()
+	handlers.InitUserHandler()
 
-	e.GET(api.CreatePath("user/:id"), handler.GetUser)
+	e.GET(api.CreatePath("user/:id"), handlers.UserHandler.GetUser)
 }
