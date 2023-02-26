@@ -45,7 +45,7 @@ func Client() {
 
 	// Start Server
 	console.App.Logf("Starting Server...")
-	serverPort := fmt.Sprintf(":%s", config.GetAPIPort())
+	serverPort := fmt.Sprintf(":%s", config.GetAPIConfig().Port)
 	if err := e.Start(serverPort); err != nil {
 		console.App.Fatalf("Server Start Failed (Error: %s)", err.Error())
 	}
