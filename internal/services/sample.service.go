@@ -3,7 +3,6 @@ package services
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/models"
-	"github.com/nuttchai/go-rest/internal/repositories"
 	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 
@@ -22,23 +21,23 @@ func init() {
 }
 
 func (s *sampleService) Test() string {
-	return repositories.SampleRepository.Test()
+	return s.repo.Models.DB.Test()
 }
 
 func (s *sampleService) GetSample(id string) (*models.Sample, error) {
-	return repositories.SampleRepository.GetSample(id)
+	return s.repo.Models.DB.GetSample(id)
 }
 
 func (s *sampleService) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
-	return repositories.SampleRepository.CreateSample(sample)
+	return s.repo.Models.DB.CreateSample(sample)
 }
 
 func (s *sampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
-	return repositories.SampleRepository.UpdateSample(sample)
+	return s.repo.Models.DB.UpdateSample(sample)
 }
 
 func (s *sampleService) DeleteSample(id string) error {
-	result, err := repositories.SampleRepository.DeleteSample(id)
+	result, err := s.repo.Models.DB.DeleteSample(id)
 	if err != nil {
 		return err
 	}

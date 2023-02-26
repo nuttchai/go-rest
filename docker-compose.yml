@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: password
       APP_DB_USER: postgres
       APP_DB_PASS: postgres
-      APP_DB_NAME: shopping
+      APP_DB_NAME: sample
     volumes:
       # [+] point data to local folder for persistent data
       - ./external/database/volumes/data:/var/lib/postgresql/data
@@ -29,7 +29,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      - shopping
+      - sample
 
   api:
     container_name: api
@@ -45,7 +45,7 @@ services:
     links:
       - db
     networks:
-      - shopping
+      - sample
 
 networks:
-  shopping:
+  sample:

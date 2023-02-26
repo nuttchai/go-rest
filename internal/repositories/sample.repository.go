@@ -48,17 +48,17 @@ func (m *DBModel) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, err
 	defer cancel()
 
 	query := `
-		insert into samples (name, desc)
+		insert into samples (name, description)
 		values ($1, $2)
 		returning *
 	`
-	row := m.SqlDB.QueryRowContext(ctx, query, sample.Name, sample.Desc)
+	row := m.SqlDB.QueryRowContext(ctx, query, sample.Name, sample.Description)
 
 	var newSample models.Sample
 	if err := row.Scan(
 		&newSample.Id,
 		&newSample.Name,
-		&newSample.Desc,
+		&newSample.Description,
 	); err != nil {
 		return nil, err
 	}
@@ -71,17 +71,17 @@ func (m *DBModel) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, err
 	defer cancel()
 
 	query := `
-		update samples set name = $1, desc = $2
+		update samples set name = $1, description = $2
 		where id = $3
 		returning *
 	`
-	row := m.SqlDB.QueryRowContext(ctx, query, sample.Name, sample.Desc, sample.Id)
+	row := m.SqlDB.QueryRowContext(ctx, query, sample.Name, sample.Description, sample.Id)
 
 	var updatedSample models.Sample
 	if err := row.Scan(
 		&updatedSample.Id,
 		&updatedSample.Name,
-		&updatedSample.Desc,
+		&updatedSample.Description,
 	); err != nil {
 		return nil, err
 	}
