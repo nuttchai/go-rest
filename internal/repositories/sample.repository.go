@@ -28,7 +28,7 @@ func (m *DBModel) GetSample(id string, filters ...*types.QueryFilter) (*models.S
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
-	baseQuery := "select * from samples where id = $1"
+	baseQuery := "select * from sample where id = $1"
 	baseArgs := []interface{}{id}
 
 	query, args := db.BuildQueryWithFilter(baseQuery, baseArgs, filters...)
@@ -38,6 +38,7 @@ func (m *DBModel) GetSample(id string, filters ...*types.QueryFilter) (*models.S
 	err := row.Scan(
 		&sample.Id,
 		&sample.Name,
+		&sample.Description,
 	)
 
 	return &sample, err
@@ -48,7 +49,7 @@ func (m *DBModel) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, err
 	defer cancel()
 
 	query := `
-		insert into samples (name, description)
+		insert into sample (name, description)
 		values ($1, $2)
 		returning *
 	`
@@ -71,7 +72,7 @@ func (m *DBModel) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, err
 	defer cancel()
 
 	query := `
-		update samples set name = $1, description = $2
+		update sample set name = $1, description = $2
 		where id = $3
 		returning *
 	`
@@ -94,7 +95,7 @@ func (m *DBModel) DeleteSample(id string) (sql.Result, error) {
 	defer cancel()
 
 	query := `
-		delete from samples 
+		delete from sample 
 		where id = $1
 	`
 	result, err := m.SqlDB.ExecContext(ctx, query, id)
