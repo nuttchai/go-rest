@@ -47,6 +47,7 @@ func (m *TSampleRepository) GetSample(id string, filters ...*types.QueryFilter) 
 		&sample.Id,
 		&sample.Name,
 		&sample.Description,
+		&sample.OwnerId,
 	)
 
 	return &sample, err
@@ -57,17 +58,18 @@ func (m *TSampleRepository) CreateSample(sample *dto.CreateSampleDTO) (*models.S
 	defer cancel()
 
 	query := `
-		insert into sample (name, description)
-		values ($1, $2)
+		insert into sample (name, description, owner_id)
+		values ($1, $2, $3)
 		returning *
 	`
-	row := m.DB.QueryRowContext(ctx, query, sample.Name, sample.Description)
+	row := m.DB.QueryRowContext(ctx, query, sample.Name, sample.Description, sample.OwnerId)
 
 	var newSample models.Sample
 	if err := row.Scan(
 		&newSample.Id,
 		&newSample.Name,
 		&newSample.Description,
+		&newSample.OwnerId,
 	); err != nil {
 		return nil, err
 	}
@@ -91,6 +93,7 @@ func (m *TSampleRepository) UpdateSample(sample *dto.UpdateSampleDTO) (*models.S
 		&updatedSample.Id,
 		&updatedSample.Name,
 		&updatedSample.Description,
+		&updatedSample.OwnerId,
 	); err != nil {
 		return nil, err
 	}

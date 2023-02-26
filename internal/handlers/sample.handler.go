@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"strconv"
+
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
@@ -12,6 +14,7 @@ import (
 
 type TSampleHandler struct {
 	sampleService services.ISampleService
+	userService   services.IUserService
 }
 
 var (
@@ -21,6 +24,7 @@ var (
 func InitSampleHandler() ISampleHandler {
 	SampleHandler = &TSampleHandler{
 		sampleService: services.InitSampleService(),
+		userService:   services.InitUserService(),
 	}
 	return SampleHandler
 }
@@ -39,7 +43,20 @@ func (h *TSampleHandler) GetSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	res := api.SuccessResponse(sample, constants.GetSampleSuccessMsg)
+	ownerId := strconv.Itoa(sample.OwnerId)
+	owner, err := h.userService.GetUser(ownerId)
+	if err != nil {
+		jsonErr := api.InternalServerError(err)
+		return c.JSON(jsonErr.Status, jsonErr)
+	}
+
+	result := sampledto.GetSampleWithUserDTO{
+		Id:          sample.Id,
+		Name:        sample.Name,
+		Description: sample.Description,
+		Owner:       owner.Username,
+	}
+	res := api.SuccessResponse(result, constants.GetSampleSuccessMsg)
 	return c.JSON(res.Status, res)
 }
 
