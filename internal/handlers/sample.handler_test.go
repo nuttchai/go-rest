@@ -20,8 +20,7 @@ var (
 	createSampleMock func(sample *sampledto.CreateSampleDTO) (*models.Sample, error)
 	updateSampleMock func(sample *sampledto.UpdateSampleDTO) (*models.Sample, error)
 	deleteSampleMock func(id string) error
-
-	getUserMock func(id string) (*models.User, error)
+	getUserMock      func(id string) (*models.User, error)
 )
 
 type TSampleServiceMock struct{}
