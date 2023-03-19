@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
-	ihandlersvc "github.com/nuttchai/go-rest/internal/services/interfaces"
+	ihandlersvc "github.com/nuttchai/go-rest/internal/service/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )
 

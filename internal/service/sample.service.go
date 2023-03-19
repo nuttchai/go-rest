@@ -1,10 +1,10 @@
-package services
+package service
 
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
-	"github.com/nuttchai/go-rest/internal/services/interfaces"
+	"github.com/nuttchai/go-rest/internal/service/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 

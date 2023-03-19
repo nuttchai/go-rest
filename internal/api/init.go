@@ -9,10 +9,10 @@ import (
 	"github.com/nuttchai/go-rest/internal/handler"
 	"github.com/nuttchai/go-rest/internal/repository"
 	"github.com/nuttchai/go-rest/internal/router"
-	"github.com/nuttchai/go-rest/internal/services"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 	"github.com/nuttchai/go-rest/internal/utils/env"
+	"google.golang.org/grpc/profiling/service"
 )
 
 func initEnv() (*types.TAPIConfig, error) {
@@ -78,7 +78,7 @@ func initApp(e *echo.Echo) {
 	repository.Init()
 
 	// Initialize Services
-	services.Init()
+	service.Init()
 
 	// Initialize Handlers
 	handler.Init()

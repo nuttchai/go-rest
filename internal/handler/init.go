@@ -1,7 +1,5 @@
 package handler
 
-import "github.com/nuttchai/go-rest/internal/services"
-
 func Init() {
 	initSampleHandler()
 	initUserHandler()
@@ -9,13 +7,13 @@ func Init() {
 
 func initSampleHandler() {
 	SampleHandler = &TSampleHandler{
-		sampleService: services.SampleService,
-		userService:   services.UserService,
+		sampleService: service.SampleService,
+		userService:   service.UserService,
 	}
 }
 
 func initUserHandler() {
 	UserHandler = &TUserHandler{
-		userService: services.UserService,
+		userService: service.UserService,
 	}
 }

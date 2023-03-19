@@ -8,7 +8,7 @@ import (
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	shareddto "github.com/nuttchai/go-rest/internal/dto/shared"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
-	ihandlersvc "github.com/nuttchai/go-rest/internal/services/interfaces"
+	ihandlersvc "github.com/nuttchai/go-rest/internal/service/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
 )

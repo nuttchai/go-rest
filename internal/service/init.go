@@ -1,4 +1,4 @@
-package services
+package service
 
 import repository "github.com/nuttchai/go-rest/internal/repository"
 
