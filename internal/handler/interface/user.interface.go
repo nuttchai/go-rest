@@ -1,4 +1,4 @@
-package interfaces
+package ihandler
 
 import "github.com/labstack/echo"
 
