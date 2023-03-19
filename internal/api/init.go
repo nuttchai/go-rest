@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/handlers"
+	"github.com/nuttchai/go-rest/internal/handler"
 	"github.com/nuttchai/go-rest/internal/repositories"
 	"github.com/nuttchai/go-rest/internal/routers"
 	"github.com/nuttchai/go-rest/internal/services"
@@ -81,7 +81,7 @@ func initApp(e *echo.Echo) {
 	services.Init()
 
 	// Initialize Handlers
-	handlers.Init()
+	handler.Init()
 
 	// Initialize Routers
 	routers.Init(e)

@@ -2,17 +2,17 @@ package routers
 
 import (
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/handlers"
+	handler "github.com/nuttchai/go-rest/internal/handlers"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )
 
 func initSampleRouter(e *echo.Echo) {
-	e.GET(api.CreatePath("sample"), handlers.SampleHandler.Test)
-	e.GET(api.CreatePath("sample/:id"), handlers.SampleHandler.GetSample)
+	e.GET(api.CreatePath("sample"), handler.SampleHandler.Test)
+	e.GET(api.CreatePath("sample/:id"), handler.SampleHandler.GetSample)
 
-	e.POST(api.CreatePath("sample"), handlers.SampleHandler.CreateSample)
+	e.POST(api.CreatePath("sample"), handler.SampleHandler.CreateSample)
 
-	e.PUT(api.CreatePath("sample"), handlers.SampleHandler.UpdateSample)
+	e.PUT(api.CreatePath("sample"), handler.SampleHandler.UpdateSample)
 
-	e.DELETE(api.CreatePath("sample/:id"), handlers.SampleHandler.DeleteSample)
+	e.DELETE(api.CreatePath("sample/:id"), handler.SampleHandler.DeleteSample)
 }

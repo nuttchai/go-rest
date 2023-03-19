@@ -1,9 +1,9 @@
-package handlers
+package handler
 
 import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
-	"github.com/nuttchai/go-rest/internal/handlers/interfaces"
+	"github.com/nuttchai/go-rest/internal/handler/interfaces"
 	servicesInterfaces "github.com/nuttchai/go-rest/internal/services/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )

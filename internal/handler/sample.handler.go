@@ -1,4 +1,4 @@
-package handlers
+package handler
 
 import (
 	"strconv"
@@ -7,7 +7,7 @@ import (
 	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	shareddto "github.com/nuttchai/go-rest/internal/dto/shared"
-	"github.com/nuttchai/go-rest/internal/handlers/interfaces"
+	"github.com/nuttchai/go-rest/internal/handler/interfaces"
 	servicesInterfaces "github.com/nuttchai/go-rest/internal/services/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
