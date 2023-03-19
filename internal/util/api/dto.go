@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/utils/validators"
+	"github.com/nuttchai/go-rest/internal/util/validators"
 )
 
 func DecodeDTO(c echo.Context, ptr any) error {

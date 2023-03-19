@@ -11,8 +11,8 @@ import (
 	"github.com/nuttchai/go-rest/internal/router"
 	"github.com/nuttchai/go-rest/internal/service"
 	"github.com/nuttchai/go-rest/internal/types"
-	"github.com/nuttchai/go-rest/internal/utils/context"
-	"github.com/nuttchai/go-rest/internal/utils/env"
+	"github.com/nuttchai/go-rest/internal/util/context"
+	"github.com/nuttchai/go-rest/internal/util/env"
 )
 
 func initEnv() (*types.TAPIConfig, error) {

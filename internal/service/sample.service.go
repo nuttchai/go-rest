@@ -5,7 +5,7 @@ import (
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
-	"github.com/nuttchai/go-rest/internal/utils/validators"
+	"github.com/nuttchai/go-rest/internal/util/validators"
 )
 
 type TSampleService struct {

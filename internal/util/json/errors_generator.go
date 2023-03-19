@@ -1,7 +1,7 @@
 package json
 
 import (
-	"github.com/nuttchai/go-rest/internal/utils/api"
+	"github.com/nuttchai/go-rest/internal/util/api"
 )
 
 func GenerateNotFoundIfErrorMatched(err error, expectedErr string) *api.APIError {

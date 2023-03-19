@@ -9,8 +9,8 @@ import (
 	shareddto "github.com/nuttchai/go-rest/internal/dto/shared"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
-	"github.com/nuttchai/go-rest/internal/utils/api"
-	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
+	"github.com/nuttchai/go-rest/internal/util/api"
+	jsonGen "github.com/nuttchai/go-rest/internal/util/json"
 )
 
 type TSampleHandler struct {

@@ -8,8 +8,8 @@ import (
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	"github.com/nuttchai/go-rest/internal/shared/console"
 	"github.com/nuttchai/go-rest/internal/types"
-	"github.com/nuttchai/go-rest/internal/utils/context"
-	"github.com/nuttchai/go-rest/internal/utils/db"
+	"github.com/nuttchai/go-rest/internal/util/context"
+	"github.com/nuttchai/go-rest/internal/util/db"
 )
 
 type TSampleRepository struct {

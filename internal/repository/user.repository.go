@@ -5,7 +5,7 @@ import (
 
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
-	"github.com/nuttchai/go-rest/internal/utils/context"
+	"github.com/nuttchai/go-rest/internal/util/context"
 )
 
 type TUserRepository struct {

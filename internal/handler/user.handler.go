@@ -5,7 +5,7 @@ import (
 	"github.com/nuttchai/go-rest/internal/constant"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
-	"github.com/nuttchai/go-rest/internal/utils/api"
+	"github.com/nuttchai/go-rest/internal/util/api"
 )
 
 type TUserHandler struct {
