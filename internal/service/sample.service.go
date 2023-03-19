@@ -9,7 +9,7 @@ import (
 )
 
 type TSampleService struct {
-	repository irepository.ISampleRepository
+	Repository irepository.ISampleRepository
 }
 
 var (
@@ -17,23 +17,23 @@ var (
 )
 
 func (s *TSampleService) Test() string {
-	return s.repository.Test()
+	return s.Repository.Test()
 }
 
 func (s *TSampleService) GetSample(id string) (*model.Sample, error) {
-	return s.repository.RetrieveOne(id)
+	return s.Repository.RetrieveOne(id)
 }
 
 func (s *TSampleService) CreateSample(sample *dto.CreateSampleDTO) (*model.Sample, error) {
-	return s.repository.CreateOne(sample)
+	return s.Repository.CreateOne(sample)
 }
 
 func (s *TSampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*model.Sample, error) {
-	return s.repository.UpdateOne(sample)
+	return s.Repository.UpdateOne(sample)
 }
 
 func (s *TSampleService) DeleteSample(id string) error {
-	result, err := s.repository.DeleteOne(id)
+	result, err := s.Repository.DeleteOne(id)
 	if err != nil {
 		return err
 	}

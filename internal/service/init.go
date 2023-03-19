@@ -9,12 +9,12 @@ func Init() {
 
 func initSampleService() {
 	SampleService = &TSampleService{
-		repository: repository.SampleRepository,
+		Repository: repository.SampleRepository,
 	}
 }
 
 func initUserService() {
 	UserService = &TUserService{
-		repository: repository.UserRepository,
+		Repository: repository.UserRepository,
 	}
 }

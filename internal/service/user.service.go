@@ -7,7 +7,7 @@ import (
 )
 
 type TUserService struct {
-	repository irepository.IUserRepository
+	Repository irepository.IUserRepository
 }
 
 var (
@@ -15,5 +15,5 @@ var (
 )
 
 func (s *TUserService) GetUser(id string) (*model.User, error) {
-	return s.repository.RetrieveOne(id)
+	return s.Repository.RetrieveOne(id)
 }

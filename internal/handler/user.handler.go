@@ -9,7 +9,7 @@ import (
 )
 
 type TUserHandler struct {
-	userService iservice.IUserService
+	UserService iservice.IUserService
 }
 
 var (
@@ -18,7 +18,7 @@ var (
 
 func (h *TUserHandler) GetUser(c echo.Context) error {
 	id := c.Param("id")
-	user, err := h.userService.GetUser(id)
+	user, err := h.UserService.GetUser(id)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
