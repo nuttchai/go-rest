@@ -1,4 +1,4 @@
-package interfaces
+package irepository
 
 import "github.com/nuttchai/go-rest/internal/model"
 

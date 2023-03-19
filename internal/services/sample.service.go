@@ -3,13 +3,13 @@ package services
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
-	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repository/interfaces"
+	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	"github.com/nuttchai/go-rest/internal/services/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
 
 type TSampleService struct {
-	repository repositoriesInterfaces.ISampleRepository
+	repository irepository.ISampleRepository
 }
 
 var (

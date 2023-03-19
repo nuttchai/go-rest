@@ -1,4 +1,4 @@
-package interfaces
+package irepository
 
 import (
 	"database/sql"

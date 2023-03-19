@@ -2,12 +2,12 @@ package services
 
 import (
 	"github.com/nuttchai/go-rest/internal/model"
-	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repository/interfaces"
+	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	"github.com/nuttchai/go-rest/internal/services/interfaces"
 )
 
 type TUserService struct {
-	repository repositoriesInterfaces.IUserRepository
+	repository irepository.IUserRepository
 }
 
 var (

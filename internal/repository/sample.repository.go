@@ -5,7 +5,7 @@ import (
 
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
-	"github.com/nuttchai/go-rest/internal/repository/interfaces"
+	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	"github.com/nuttchai/go-rest/internal/shared/console"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
@@ -17,7 +17,7 @@ type TSampleRepository struct {
 }
 
 var (
-	SampleRepository interfaces.ISampleRepository
+	SampleRepository irepository.ISampleRepository
 )
 
 func (m *TSampleRepository) Test() string {

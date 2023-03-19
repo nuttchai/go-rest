@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/nuttchai/go-rest/internal/model"
-	"github.com/nuttchai/go-rest/internal/repository/interfaces"
+	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 )
 
@@ -13,7 +13,7 @@ type TUserRepository struct {
 }
 
 var (
-	UserRepository interfaces.IUserRepository
+	UserRepository irepository.IUserRepository
 )
 
 func (m *TUserRepository) RetrieveOne(id string) (*model.User, error) {
