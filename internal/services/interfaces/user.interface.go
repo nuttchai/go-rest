@@ -1,7 +1,7 @@
 package interfaces
 
-import "github.com/nuttchai/go-rest/internal/models"
+import "github.com/nuttchai/go-rest/internal/model"
 
 type IUserService interface {
-	GetUser(id string) (*models.User, error)
+	GetUser(id string) (*model.User, error)
 }

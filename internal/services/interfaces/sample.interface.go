@@ -2,13 +2,13 @@ package interfaces
 
 import (
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 )
 
 type ISampleService interface {
 	Test() string
-	GetSample(id string) (*models.Sample, error)
-	CreateSample(sample *sampledto.CreateSampleDTO) (*models.Sample, error)
-	UpdateSample(sample *sampledto.UpdateSampleDTO) (*models.Sample, error)
+	GetSample(id string) (*model.Sample, error)
+	CreateSample(sample *sampledto.CreateSampleDTO) (*model.Sample, error)
+	UpdateSample(sample *sampledto.UpdateSampleDTO) (*model.Sample, error)
 	DeleteSample(id string) error
 }

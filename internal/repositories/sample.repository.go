@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 	"github.com/nuttchai/go-rest/internal/repositories/interfaces"
 	"github.com/nuttchai/go-rest/internal/shared/console"
 	"github.com/nuttchai/go-rest/internal/types"
@@ -25,7 +25,7 @@ func (m *TSampleRepository) Test() string {
 	return "test"
 }
 
-func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilter) (*models.Sample, error) {
+func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilter) (*model.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -35,7 +35,7 @@ func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilte
 	query, args := db.BuildQueryWithFilter(baseQuery, baseArgs, filters...)
 	row := m.DB.QueryRowContext(ctx, query, args...)
 
-	var sample models.Sample
+	var sample model.Sample
 	err := row.Scan(
 		&sample.Id,
 		&sample.Name,
@@ -46,7 +46,7 @@ func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilte
 	return &sample, err
 }
 
-func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*models.Sample, error) {
+func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*model.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -57,7 +57,7 @@ func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*models.Samp
 	`
 	row := m.DB.QueryRowContext(ctx, query, sample.Name, sample.Description, sample.OwnerId)
 
-	var newSample models.Sample
+	var newSample model.Sample
 	if err := row.Scan(
 		&newSample.Id,
 		&newSample.Name,
@@ -70,7 +70,7 @@ func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*models.Samp
 	return &newSample, nil
 }
 
-func (m *TSampleRepository) UpdateOne(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
+func (m *TSampleRepository) UpdateOne(sample *dto.UpdateSampleDTO) (*model.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -81,7 +81,7 @@ func (m *TSampleRepository) UpdateOne(sample *dto.UpdateSampleDTO) (*models.Samp
 	`
 	row := m.DB.QueryRowContext(ctx, query, sample.Name, sample.Description, sample.Id)
 
-	var updatedSample models.Sample
+	var updatedSample model.Sample
 	if err := row.Scan(
 		&updatedSample.Id,
 		&updatedSample.Name,

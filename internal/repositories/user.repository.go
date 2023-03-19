@@ -3,7 +3,7 @@ package repositories
 import (
 	"database/sql"
 
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 	"github.com/nuttchai/go-rest/internal/repositories/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 )
@@ -16,7 +16,7 @@ var (
 	UserRepository interfaces.IUserRepository
 )
 
-func (m *TUserRepository) RetrieveOne(id string) (*models.User, error) {
+func (m *TUserRepository) RetrieveOne(id string) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -24,7 +24,7 @@ func (m *TUserRepository) RetrieveOne(id string) (*models.User, error) {
 	query := "select * from public.user where id = $1"
 	row := m.DB.QueryRowContext(ctx, query, id)
 
-	var user models.User
+	var user model.User
 	err := row.Scan(
 		&user.Id,
 		&user.Username,

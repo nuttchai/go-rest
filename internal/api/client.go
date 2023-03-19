@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq"
 	"github.com/nuttchai/go-rest/internal/middleware"
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 	"github.com/nuttchai/go-rest/internal/shared/config"
 	"github.com/nuttchai/go-rest/internal/shared/console"
 	"github.com/nuttchai/go-rest/internal/types"
@@ -36,7 +36,7 @@ func Client() {
 	// Add the Configuration into AppConfig
 	appConfig := &types.TAppConfig{
 		APIConfig: *config.GetAPIConfig(),
-		Models:    models.Init(db),
+		Models:    model.Init(db),
 	}
 	config.SetAppConfig(appConfig)
 

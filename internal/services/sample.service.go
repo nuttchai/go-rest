@@ -2,7 +2,7 @@ package services
 
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repositories/interfaces"
 	"github.com/nuttchai/go-rest/internal/services/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/validators"
@@ -20,15 +20,15 @@ func (s *TSampleService) Test() string {
 	return s.repository.Test()
 }
 
-func (s *TSampleService) GetSample(id string) (*models.Sample, error) {
+func (s *TSampleService) GetSample(id string) (*model.Sample, error) {
 	return s.repository.RetrieveOne(id)
 }
 
-func (s *TSampleService) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
+func (s *TSampleService) CreateSample(sample *dto.CreateSampleDTO) (*model.Sample, error) {
 	return s.repository.CreateOne(sample)
 }
 
-func (s *TSampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
+func (s *TSampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*model.Sample, error) {
 	return s.repository.UpdateOne(sample)
 }
 

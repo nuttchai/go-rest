@@ -1,8 +1,6 @@
 package types
 
-import (
-	"github.com/nuttchai/go-rest/internal/models"
-)
+import "github.com/nuttchai/go-rest/internal/model"
 
 type TAPIConfig struct {
 	Port string
@@ -15,5 +13,5 @@ type TAPIConfig struct {
 
 type TAppConfig struct {
 	APIConfig TAPIConfig
-	Models    models.Models
+	Models    model.Models
 }

@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repositories/interfaces"
 	"github.com/nuttchai/go-rest/internal/services/interfaces"
 )
@@ -14,6 +14,6 @@ var (
 	UserService interfaces.IUserService
 )
 
-func (s *TUserService) GetUser(id string) (*models.User, error) {
+func (s *TUserService) GetUser(id string) (*model.User, error) {
 	return s.repository.RetrieveOne(id)
 }

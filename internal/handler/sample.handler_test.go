@@ -9,18 +9,18 @@ import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
-	"github.com/nuttchai/go-rest/internal/models"
+	"github.com/nuttchai/go-rest/internal/model"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
 	e                *echo.Echo
 	testMock         func() string
-	getSampleMock    func(id string) (*models.Sample, error)
-	createSampleMock func(sample *sampledto.CreateSampleDTO) (*models.Sample, error)
-	updateSampleMock func(sample *sampledto.UpdateSampleDTO) (*models.Sample, error)
+	getSampleMock    func(id string) (*model.Sample, error)
+	createSampleMock func(sample *sampledto.CreateSampleDTO) (*model.Sample, error)
+	updateSampleMock func(sample *sampledto.UpdateSampleDTO) (*model.Sample, error)
 	deleteSampleMock func(id string) error
-	getUserMock      func(id string) (*models.User, error)
+	getUserMock      func(id string) (*model.User, error)
 )
 
 type TSampleServiceMock struct{}
@@ -30,15 +30,15 @@ func (*TSampleServiceMock) Test() string {
 	return testMock()
 }
 
-func (*TSampleServiceMock) GetSample(id string) (*models.Sample, error) {
+func (*TSampleServiceMock) GetSample(id string) (*model.Sample, error) {
 	return getSampleMock(id)
 }
 
-func (*TSampleServiceMock) CreateSample(sample *sampledto.CreateSampleDTO) (*models.Sample, error) {
+func (*TSampleServiceMock) CreateSample(sample *sampledto.CreateSampleDTO) (*model.Sample, error) {
 	return createSampleMock(sample)
 }
 
-func (*TSampleServiceMock) UpdateSample(sample *sampledto.UpdateSampleDTO) (*models.Sample, error) {
+func (*TSampleServiceMock) UpdateSample(sample *sampledto.UpdateSampleDTO) (*model.Sample, error) {
 	return updateSampleMock(sample)
 }
 
@@ -46,7 +46,7 @@ func (*TSampleServiceMock) DeleteSample(id string) error {
 	return deleteSampleMock(id)
 }
 
-func (*TUserServiceMock) GetUser(id string) (*models.User, error) {
+func (*TUserServiceMock) GetUser(id string) (*model.User, error) {
 	return getUserMock(id)
 }
 
@@ -89,16 +89,16 @@ func TestTestReturn(t *testing.T) {
 
 func TestGetSampleReturn(t *testing.T) {
 	// Arrange
-	getSampleMock = func(id string) (*models.Sample, error) {
-		return &models.Sample{
+	getSampleMock = func(id string) (*model.Sample, error) {
+		return &model.Sample{
 			Id:          1,
 			Name:        "sample",
 			Description: "description",
 			OwnerId:     1,
 		}, nil
 	}
-	getUserMock = func(id string) (*models.User, error) {
-		return &models.User{
+	getUserMock = func(id string) (*model.User, error) {
+		return &model.User{
 			Id:       1,
 			Username: "username",
 		}, nil
@@ -122,7 +122,7 @@ func TestGetSampleReturn(t *testing.T) {
 
 func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
 	// Arrange
-	getSampleMock = func(id string) (*models.Sample, error) {
+	getSampleMock = func(id string) (*model.Sample, error) {
 		return nil, errors.New("error")
 	}
 	initSampleServiceMock()
@@ -142,15 +142,15 @@ func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
 
 func TestGetSampleReturnErrorFromGetUser(t *testing.T) {
 	// Arrange
-	getSampleMock = func(id string) (*models.Sample, error) {
-		return &models.Sample{
+	getSampleMock = func(id string) (*model.Sample, error) {
+		return &model.Sample{
 			Id:          1,
 			Name:        "sample",
 			Description: "description",
 			OwnerId:     1,
 		}, nil
 	}
-	getUserMock = func(id string) (*models.User, error) {
+	getUserMock = func(id string) (*model.User, error) {
 		return nil, errors.New("error")
 	}
 	initSampleServiceMock()

@@ -1,9 +1,7 @@
 package interfaces
 
-import (
-	"github.com/nuttchai/go-rest/internal/models"
-)
+import "github.com/nuttchai/go-rest/internal/model"
 
 type IUserRepository interface {
-	RetrieveOne(id string) (*models.User, error)
+	RetrieveOne(id string) (*model.User, error)
 }
