@@ -21,19 +21,19 @@ func (s *TSampleService) Test() string {
 }
 
 func (s *TSampleService) GetSample(id string) (*models.Sample, error) {
-	return s.repository.GetSample(id)
+	return s.repository.RetrieveOne(id)
 }
 
 func (s *TSampleService) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
-	return s.repository.CreateSample(sample)
+	return s.repository.CreateOne(sample)
 }
 
 func (s *TSampleService) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
-	return s.repository.UpdateSample(sample)
+	return s.repository.UpdateOne(sample)
 }
 
 func (s *TSampleService) DeleteSample(id string) error {
-	result, err := s.repository.DeleteSample(id)
+	result, err := s.repository.DeleteOne(id)
 	if err != nil {
 		return err
 	}

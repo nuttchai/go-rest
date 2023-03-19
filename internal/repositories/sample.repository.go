@@ -25,7 +25,7 @@ func (m *TSampleRepository) Test() string {
 	return "test"
 }
 
-func (m *TSampleRepository) GetSample(id string, filters ...*types.TQueryFilter) (*models.Sample, error) {
+func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilter) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -46,7 +46,7 @@ func (m *TSampleRepository) GetSample(id string, filters ...*types.TQueryFilter)
 	return &sample, err
 }
 
-func (m *TSampleRepository) CreateSample(sample *dto.CreateSampleDTO) (*models.Sample, error) {
+func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -70,7 +70,7 @@ func (m *TSampleRepository) CreateSample(sample *dto.CreateSampleDTO) (*models.S
 	return &newSample, nil
 }
 
-func (m *TSampleRepository) UpdateSample(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
+func (m *TSampleRepository) UpdateOne(sample *dto.UpdateSampleDTO) (*models.Sample, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
@@ -94,7 +94,7 @@ func (m *TSampleRepository) UpdateSample(sample *dto.UpdateSampleDTO) (*models.S
 	return &updatedSample, nil
 }
 
-func (m *TSampleRepository) DeleteSample(id string) (sql.Result, error) {
+func (m *TSampleRepository) DeleteOne(id string) (sql.Result, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 

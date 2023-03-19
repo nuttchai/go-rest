@@ -15,5 +15,5 @@ var (
 )
 
 func (s *TUserService) GetUser(id string) (*models.User, error) {
-	return s.repository.GetUser(id)
+	return s.repository.RetrieveOne(id)
 }

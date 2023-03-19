@@ -5,5 +5,5 @@ import (
 )
 
 type IUserRepository interface {
-	GetUser(id string) (*models.User, error)
+	RetrieveOne(id string) (*models.User, error)
 }

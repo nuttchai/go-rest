@@ -16,7 +16,7 @@ var (
 	UserRepository interfaces.IUserRepository
 )
 
-func (m *TUserRepository) GetUser(id string) (*models.User, error) {
+func (m *TUserRepository) RetrieveOne(id string) (*models.User, error) {
 	ctx, cancel := context.WithTimeout(3)
 	defer cancel()
 
