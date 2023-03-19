@@ -74,15 +74,8 @@ func initSqlDB(cfg *types.TAPIConfig) (*sql.DB, error) {
 }
 
 func initApp(e *echo.Echo) {
-	// Initialize Repositories
 	repository.Init()
-
-	// Initialize Services
 	service.Init()
-
-	// Initialize Handlers
 	handler.Init()
-
-	// Initialize Routers
 	router.Init(e)
 }
