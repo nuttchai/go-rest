@@ -1,7 +1,7 @@
 package api
 
-import "github.com/nuttchai/go-rest/internal/constants"
+import "github.com/nuttchai/go-rest/internal/constant"
 
 func CreatePath(path string) string {
-	return constants.BasePath + path
+	return constant.BasePath + path
 }

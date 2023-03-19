@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/constants"
+	"github.com/nuttchai/go-rest/internal/constant"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
 	"github.com/stretchr/testify/assert"
@@ -55,7 +55,7 @@ func init() {
 }
 
 func setUpRequest(method string, subPath string) *http.Request {
-	path := constants.LocalHost + constants.BasePath + subPath
+	path := constant.LocalHost + constant.BasePath + subPath
 	req := httptest.NewRequest(method, path, nil)
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	return req

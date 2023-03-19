@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/constants"
+	"github.com/nuttchai/go-rest/internal/constant"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	shareddto "github.com/nuttchai/go-rest/internal/dto/shared"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
@@ -24,7 +24,7 @@ var (
 
 func (h *TSampleHandler) Test(c echo.Context) error {
 	resultTest := h.sampleService.Test()
-	res := api.SuccessResponse(resultTest, constants.TestSuccessMsg)
+	res := api.SuccessResponse(resultTest, constant.TestSuccessMsg)
 	return c.JSON(res.Status, res)
 }
 
@@ -49,7 +49,7 @@ func (h *TSampleHandler) GetSample(c echo.Context) error {
 		Description: sample.Description,
 		Owner:       owner.Username,
 	}
-	res := api.SuccessResponse(result, constants.GetSampleSuccessMsg)
+	res := api.SuccessResponse(result, constant.GetSampleSuccessMsg)
 	return c.JSON(res.Status, res)
 }
 
@@ -66,7 +66,7 @@ func (h *TSampleHandler) CreateSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	res := api.SuccessResponse(createdSample, constants.CreateSampleSuccessMsg)
+	res := api.SuccessResponse(createdSample, constant.CreateSampleSuccessMsg)
 	return c.JSON(res.Status, res)
 }
 
@@ -79,11 +79,11 @@ func (h *TSampleHandler) UpdateSample(c echo.Context) error {
 
 	updatedSample, err := h.sampleService.UpdateSample(&sampleDto)
 	if err != nil {
-		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constants.SampleNotFound)
+		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constant.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	res := api.SuccessResponse(updatedSample, constants.UpdateSampleSuccessMsg)
+	res := api.SuccessResponse(updatedSample, constant.UpdateSampleSuccessMsg)
 	return c.JSON(res.Status, res)
 }
 
@@ -91,11 +91,11 @@ func (h *TSampleHandler) DeleteSample(c echo.Context) error {
 	id := c.Param("id")
 	err := h.sampleService.DeleteSample(id)
 	if err != nil {
-		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constants.SampleNotFound)
+		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constant.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
 	json := &shareddto.ValidatorResultDTO{Action: "DeleteSample", IsSuccess: true}
-	res := api.SuccessResponse(json, constants.DeleteSampleSuccessMsg)
+	res := api.SuccessResponse(json, constant.DeleteSampleSuccessMsg)
 	return c.JSON(res.Status, res)
 }

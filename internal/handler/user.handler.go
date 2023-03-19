@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/constants"
+	"github.com/nuttchai/go-rest/internal/constant"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/utils/api"
@@ -24,6 +24,6 @@ func (h *TUserHandler) GetUser(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	res := api.SuccessResponse(user, constants.GetUserSuccessMsg)
+	res := api.SuccessResponse(user, constant.GetUserSuccessMsg)
 	return c.JSON(res.Status, res)
 }

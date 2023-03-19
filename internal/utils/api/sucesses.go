@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"github.com/nuttchai/go-rest/internal/constants"
+	"github.com/nuttchai/go-rest/internal/constant"
 )
 
 type APISuccess struct {
@@ -13,7 +13,7 @@ type APISuccess struct {
 }
 
 func SuccessResponse(result interface{}, message ...string) *APISuccess {
-	msg := constants.DefaultAPISuccessMsg
+	msg := constant.DefaultAPISuccessMsg
 	if len(message) > 0 {
 		msg = message[0]
 	}

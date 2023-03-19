@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"github.com/nuttchai/go-rest/internal/constants"
+	"github.com/nuttchai/go-rest/internal/constant"
 )
 
 type APIError struct {
@@ -13,7 +13,7 @@ type APIError struct {
 }
 
 func CustomError(err error, status int, message ...string) *APIError {
-	msg := constants.DefaultAPIErrorMsg
+	msg := constant.DefaultAPIErrorMsg
 	if len(message) > 0 {
 		msg = message[0]
 	}

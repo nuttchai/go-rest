@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/nuttchai/go-rest/internal/constants"
+	"github.com/nuttchai/go-rest/internal/constant"
 )
 
 func CheckRowsAffected(sqlResult sql.Result) error {
@@ -12,7 +12,7 @@ func CheckRowsAffected(sqlResult sql.Result) error {
 	if err != nil {
 		return err
 	} else if rowsAffected == 0 {
-		return errors.New(constants.SampleNotFound)
+		return errors.New(constant.SampleNotFound)
 	}
 
 	return nil
