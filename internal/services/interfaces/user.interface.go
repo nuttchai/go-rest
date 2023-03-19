@@ -1,4 +1,4 @@
-package services
+package interfaces
 
 import "github.com/nuttchai/go-rest/internal/models"
 

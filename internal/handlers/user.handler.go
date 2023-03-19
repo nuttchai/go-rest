@@ -3,16 +3,17 @@ package handlers
 import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
-	"github.com/nuttchai/go-rest/internal/services"
+	"github.com/nuttchai/go-rest/internal/handlers/interfaces"
+	servicesInterfaces "github.com/nuttchai/go-rest/internal/services/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )
 
 type TUserHandler struct {
-	userService services.IUserService
+	userService servicesInterfaces.IUserService
 }
 
 var (
-	UserHandler IUserHandler
+	UserHandler interfaces.IUserHandler
 )
 
 func (h *TUserHandler) GetUser(c echo.Context) error {
