@@ -1,4 +1,4 @@
-package interfaces
+package iservice
 
 import "github.com/nuttchai/go-rest/internal/model"
 

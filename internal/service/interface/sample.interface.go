@@ -1,4 +1,4 @@
-package interfaces
+package iservice
 
 import (
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"

@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
-	"github.com/nuttchai/go-rest/internal/service/interfaces"
+	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 )
 
 type TUserService struct {
@@ -11,7 +11,7 @@ type TUserService struct {
 }
 
 var (
-	UserService interfaces.IUserService
+	UserService iservice.IUserService
 )
 
 func (s *TUserService) GetUser(id string) (*model.User, error) {

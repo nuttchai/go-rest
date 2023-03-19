@@ -4,12 +4,12 @@ import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constants"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
-	ihandlersvc "github.com/nuttchai/go-rest/internal/service/interfaces"
+	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 )
 
 type TUserHandler struct {
-	userService ihandlersvc.IUserService
+	userService iservice.IUserService
 }
 
 var (

@@ -8,14 +8,14 @@ import (
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	shareddto "github.com/nuttchai/go-rest/internal/dto/shared"
 	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
-	ihandlersvc "github.com/nuttchai/go-rest/internal/service/interfaces"
+	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/utils/api"
 	jsonGen "github.com/nuttchai/go-rest/internal/utils/json"
 )
 
 type TSampleHandler struct {
-	sampleService ihandlersvc.ISampleService
-	userService   ihandlersvc.IUserService
+	sampleService iservice.ISampleService
+	userService   iservice.IUserService
 }
 
 var (
