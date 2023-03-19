@@ -14,8 +14,8 @@ import (
 )
 
 type TSampleHandler struct {
-	sampleService iservice.ISampleService
-	userService   iservice.IUserService
+	SampleService iservice.ISampleService
+	UserService   iservice.IUserService
 }
 
 var (
@@ -23,21 +23,21 @@ var (
 )
 
 func (h *TSampleHandler) Test(c echo.Context) error {
-	resultTest := h.sampleService.Test()
+	resultTest := h.SampleService.Test()
 	res := api.SuccessResponse(resultTest, constant.TestSuccessMsg)
 	return c.JSON(res.Status, res)
 }
 
 func (h *TSampleHandler) GetSample(c echo.Context) error {
 	id := c.Param("id")
-	sample, err := h.sampleService.GetSample(id)
+	sample, err := h.SampleService.GetSample(id)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
 	ownerId := strconv.Itoa(sample.OwnerId)
-	owner, err := h.userService.GetUser(ownerId)
+	owner, err := h.UserService.GetUser(ownerId)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
@@ -60,7 +60,7 @@ func (h *TSampleHandler) CreateSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	createdSample, err := h.sampleService.CreateSample(sampleDto)
+	createdSample, err := h.SampleService.CreateSample(sampleDto)
 	if err != nil {
 		jsonErr := api.InternalServerError(err)
 		return c.JSON(jsonErr.Status, jsonErr)
@@ -77,7 +77,7 @@ func (h *TSampleHandler) UpdateSample(c echo.Context) error {
 		return c.JSON(jsonErr.Status, jsonErr)
 	}
 
-	updatedSample, err := h.sampleService.UpdateSample(&sampleDto)
+	updatedSample, err := h.SampleService.UpdateSample(&sampleDto)
 	if err != nil {
 		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constant.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)
@@ -89,7 +89,7 @@ func (h *TSampleHandler) UpdateSample(c echo.Context) error {
 
 func (h *TSampleHandler) DeleteSample(c echo.Context) error {
 	id := c.Param("id")
-	err := h.sampleService.DeleteSample(id)
+	err := h.SampleService.DeleteSample(id)
 	if err != nil {
 		jsonErr := jsonGen.GenerateNotFoundIfErrorMatched(err, constant.SampleNotFound)
 		return c.JSON(jsonErr.Status, jsonErr)

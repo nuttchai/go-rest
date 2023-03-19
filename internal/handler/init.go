@@ -9,13 +9,13 @@ func Init() {
 
 func initSampleHandler() {
 	SampleHandler = &TSampleHandler{
-		sampleService: service.SampleService,
-		userService:   service.UserService,
+		SampleService: service.SampleService,
+		UserService:   service.UserService,
 	}
 }
 
 func initUserHandler() {
 	UserHandler = &TUserHandler{
-		userService: service.UserService,
+		UserService: service.UserService,
 	}
 }

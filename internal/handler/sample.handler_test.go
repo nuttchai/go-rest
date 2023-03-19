@@ -63,8 +63,8 @@ func setUpRequest(method string, subPath string) *http.Request {
 
 func initSampleServiceMock() {
 	SampleHandler = &TSampleHandler{
-		sampleService: &TSampleServiceMock{},
-		userService:   &TUserServiceMock{},
+		SampleService: &TSampleServiceMock{},
+		UserService:   &TUserServiceMock{},
 	}
 }
 
