@@ -1,6 +1,6 @@
 package services
 
-import "github.com/nuttchai/go-rest/internal/repositories"
+import repository "github.com/nuttchai/go-rest/internal/repository"
 
 func Init() {
 	initUserService()
@@ -9,12 +9,12 @@ func Init() {
 
 func initSampleService() {
 	SampleService = &TSampleService{
-		repository: repositories.SampleRepository,
+		repository: repository.SampleRepository,
 	}
 }
 
 func initUserService() {
 	UserService = &TUserService{
-		repository: repositories.UserRepository,
+		repository: repository.UserRepository,
 	}
 }

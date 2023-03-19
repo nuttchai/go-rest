@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/nuttchai/go-rest/internal/model"
-	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repositories/interfaces"
+	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repository/interfaces"
 	"github.com/nuttchai/go-rest/internal/services/interfaces"
 )
 

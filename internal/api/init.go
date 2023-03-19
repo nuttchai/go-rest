@@ -7,7 +7,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/handler"
-	"github.com/nuttchai/go-rest/internal/repositories"
+	"github.com/nuttchai/go-rest/internal/repository"
 	"github.com/nuttchai/go-rest/internal/router"
 	"github.com/nuttchai/go-rest/internal/services"
 	"github.com/nuttchai/go-rest/internal/types"
@@ -75,7 +75,7 @@ func initSqlDB(cfg *types.TAPIConfig) (*sql.DB, error) {
 
 func initApp(e *echo.Echo) {
 	// Initialize Repositories
-	repositories.Init()
+	repository.Init()
 
 	// Initialize Services
 	services.Init()

@@ -1,10 +1,10 @@
-package repositories
+package repository
 
 import (
 	"database/sql"
 
 	"github.com/nuttchai/go-rest/internal/model"
-	"github.com/nuttchai/go-rest/internal/repositories/interfaces"
+	"github.com/nuttchai/go-rest/internal/repository/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/context"
 )
 

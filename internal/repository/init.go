@@ -1,4 +1,4 @@
-package repositories
+package repository
 
 import "github.com/nuttchai/go-rest/internal/shared/config"
 

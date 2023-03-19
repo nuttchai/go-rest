@@ -3,7 +3,7 @@ package services
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
-	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repositories/interfaces"
+	repositoriesInterfaces "github.com/nuttchai/go-rest/internal/repository/interfaces"
 	"github.com/nuttchai/go-rest/internal/services/interfaces"
 	"github.com/nuttchai/go-rest/internal/utils/validators"
 )
