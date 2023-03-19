@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/handler"
 	"github.com/nuttchai/go-rest/internal/repositories"
-	"github.com/nuttchai/go-rest/internal/routers"
+	"github.com/nuttchai/go-rest/internal/router"
 	"github.com/nuttchai/go-rest/internal/services"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/utils/context"
@@ -84,5 +84,5 @@ func initApp(e *echo.Echo) {
 	handler.Init()
 
 	// Initialize Routers
-	routers.Init(e)
+	router.Init(e)
 }
