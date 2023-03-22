@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 
+	"github.com/nuttchai/go-rest/internal/constant"
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
@@ -30,7 +31,7 @@ func (m *TSampleRepository) Test() string {
 }
 
 func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilter) (*model.Sample, error) {
-	ctx, cancel := context.WithTimeout(3)
+	ctx, cancel := context.WithTimeout(constant.QueryTimeout)
 	defer cancel()
 
 	baseQuery := "select * from sample where id = $1"
@@ -51,7 +52,7 @@ func (m *TSampleRepository) RetrieveOne(id string, filters ...*types.TQueryFilte
 }
 
 func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*model.Sample, error) {
-	ctx, cancel := context.WithTimeout(3)
+	ctx, cancel := context.WithTimeout(constant.QueryTimeout)
 	defer cancel()
 
 	query := `
@@ -75,7 +76,7 @@ func (m *TSampleRepository) CreateOne(sample *dto.CreateSampleDTO) (*model.Sampl
 }
 
 func (m *TSampleRepository) UpdateOne(sample *dto.UpdateSampleDTO) (*model.Sample, error) {
-	ctx, cancel := context.WithTimeout(3)
+	ctx, cancel := context.WithTimeout(constant.QueryTimeout)
 	defer cancel()
 
 	query := `
@@ -99,7 +100,7 @@ func (m *TSampleRepository) UpdateOne(sample *dto.UpdateSampleDTO) (*model.Sampl
 }
 
 func (m *TSampleRepository) DeleteOne(id string) (sql.Result, error) {
-	ctx, cancel := context.WithTimeout(3)
+	ctx, cancel := context.WithTimeout(constant.QueryTimeout)
 	defer cancel()
 
 	query := `

@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/labstack/echo"
+	"github.com/nuttchai/go-rest/internal/constant"
 	"github.com/nuttchai/go-rest/internal/handler"
 	"github.com/nuttchai/go-rest/internal/repository"
 	"github.com/nuttchai/go-rest/internal/router"
@@ -62,7 +63,7 @@ func initSqlDB(cfg *types.TAPIConfig) (*sql.DB, error) {
 		return nil, err
 	}
 
-	ctx, cancel := context.WithTimeout(5)
+	ctx, cancel := context.WithTimeout(constant.InitConnectionTimeout)
 	defer cancel()
 
 	err = db.PingContext(ctx)

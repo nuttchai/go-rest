@@ -18,15 +18,16 @@ func init() {
 func Client() {
 	// Add the Configuration into ApiConfig
 	console.App.Log("Loading App Configuration...")
-	apiConfig, err := initEnv()
+	cfg, err := initEnv()
 	if err != nil {
 		console.App.Fatalf("Error Loading Root Directory (Error: %s)", err.Error())
 	}
-	config.SetAPIConfig(apiConfig)
+	config.SetAPIConfig(cfg)
 
 	// Establish Database Connection
 	console.App.Log("Connecting Database...")
-	db, err := initSqlDB(config.GetAPIConfig())
+	apiConfig := config.GetAPIConfig()
+	db, err := initSqlDB(apiConfig)
 	if err != nil {
 		console.App.Fatalf("Database Connection Failed (Error: %s)", err.Error())
 	}
@@ -35,7 +36,7 @@ func Client() {
 
 	// Add the Configuration into AppConfig
 	appConfig := &types.TAppConfig{
-		APIConfig: *config.GetAPIConfig(),
+		APIConfig: *apiConfig,
 		Models:    model.Init(db),
 	}
 	config.SetAppConfig(appConfig)
@@ -48,7 +49,7 @@ func Client() {
 
 	// Start Server
 	console.App.Logf("Starting Server...")
-	serverPort := fmt.Sprintf(":%s", config.GetAPIConfig().Port)
+	serverPort := fmt.Sprintf(":%s", apiConfig.Port)
 	if err := e.Start(serverPort); err != nil {
 		console.App.Fatalf("Server Start Failed (Error: %s)", err.Error())
 	}
