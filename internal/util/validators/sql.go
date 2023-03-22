@@ -12,7 +12,7 @@ func CheckRowsAffected(sqlResult sql.Result) error {
 	if err != nil {
 		return err
 	} else if rowsAffected == 0 {
-		return errors.New(constant.SampleNotFound)
+		return errors.New(constant.QueryNotFound)
 	}
 
 	return nil
