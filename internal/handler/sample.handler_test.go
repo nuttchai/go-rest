@@ -8,50 +8,22 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constant"
-	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
+	mhandler "github.com/nuttchai/go-rest/internal/handler/mock"
 	"github.com/nuttchai/go-rest/internal/model"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
-	e                *echo.Echo
-	testMock         func() string
-	getSampleMock    func(id string) (*model.Sample, error)
-	createSampleMock func(sample *sampledto.CreateSampleDTO) (*model.Sample, error)
-	updateSampleMock func(sample *sampledto.UpdateSampleDTO) (*model.Sample, error)
-	deleteSampleMock func(id string) error
-	getUserMock      func(id string) (*model.User, error)
+	e           *echo.Echo
+	handlerMock *TSampleHandler
 )
-
-type TSampleServiceMock struct{}
-type TUserServiceMock struct{}
-
-func (*TSampleServiceMock) Test() string {
-	return testMock()
-}
-
-func (*TSampleServiceMock) GetSample(id string) (*model.Sample, error) {
-	return getSampleMock(id)
-}
-
-func (*TSampleServiceMock) CreateSample(sample *sampledto.CreateSampleDTO) (*model.Sample, error) {
-	return createSampleMock(sample)
-}
-
-func (*TSampleServiceMock) UpdateSample(sample *sampledto.UpdateSampleDTO) (*model.Sample, error) {
-	return updateSampleMock(sample)
-}
-
-func (*TSampleServiceMock) DeleteSample(id string) error {
-	return deleteSampleMock(id)
-}
-
-func (*TUserServiceMock) GetUser(id string) (*model.User, error) {
-	return getUserMock(id)
-}
 
 func init() {
 	e = echo.New()
+	handlerMock = &TSampleHandler{
+		SampleService: &mhandler.TSampleServiceMock{},
+		UserService:   &mhandler.TUserServiceMock{},
+	}
 }
 
 func setUpRequest(method string, subPath string) *http.Request {
@@ -61,19 +33,13 @@ func setUpRequest(method string, subPath string) *http.Request {
 	return req
 }
 
-func initSampleServiceMock() {
-	SampleHandler = &TSampleHandler{
-		SampleService: &TSampleServiceMock{},
-		UserService:   &TUserServiceMock{},
-	}
-}
-
 func TestTestReturn(t *testing.T) {
 	// Arrange
-	testMock = func() string {
+	mhandler.TestMock = func() string {
 		return "test"
 	}
-	initSampleServiceMock()
+
+	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
 	req := setUpRequest(echo.GET, "/sample")
@@ -89,7 +55,7 @@ func TestTestReturn(t *testing.T) {
 
 func TestGetSampleReturn(t *testing.T) {
 	// Arrange
-	getSampleMock = func(id string) (*model.Sample, error) {
+	mhandler.GetSampleMock = func(id string) (*model.Sample, error) {
 		return &model.Sample{
 			Id:          1,
 			Name:        "sample",
@@ -97,13 +63,15 @@ func TestGetSampleReturn(t *testing.T) {
 			OwnerId:     1,
 		}, nil
 	}
-	getUserMock = func(id string) (*model.User, error) {
+
+	mhandler.GetUserMock = func(id string) (*model.User, error) {
 		return &model.User{
 			Id:       1,
 			Username: "username",
 		}, nil
 	}
-	initSampleServiceMock()
+
+	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
 	req := setUpRequest(echo.GET, "/sample/1")
@@ -122,10 +90,11 @@ func TestGetSampleReturn(t *testing.T) {
 
 func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
 	// Arrange
-	getSampleMock = func(id string) (*model.Sample, error) {
+	mhandler.GetSampleMock = func(id string) (*model.Sample, error) {
 		return nil, errors.New("error")
 	}
-	initSampleServiceMock()
+
+	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
 	req := setUpRequest(echo.GET, "/sample/1")
@@ -142,7 +111,7 @@ func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
 
 func TestGetSampleReturnErrorFromGetUser(t *testing.T) {
 	// Arrange
-	getSampleMock = func(id string) (*model.Sample, error) {
+	mhandler.GetSampleMock = func(id string) (*model.Sample, error) {
 		return &model.Sample{
 			Id:          1,
 			Name:        "sample",
@@ -150,14 +119,15 @@ func TestGetSampleReturnErrorFromGetUser(t *testing.T) {
 			OwnerId:     1,
 		}, nil
 	}
-	getUserMock = func(id string) (*model.User, error) {
+
+	mhandler.GetUserMock = func(id string) (*model.User, error) {
 		return nil, errors.New("error")
 	}
-	initSampleServiceMock()
+
+	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
 	req := setUpRequest(echo.GET, "/sample/1")
-
 	c := e.NewContext(req, rec)
 
 	// Act
