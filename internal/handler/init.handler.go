@@ -14,11 +14,3 @@ func Init() {
 		UserService: service.UserService,
 	})
 }
-
-func initSampleHandler(sampleHandler *TSampleHandler) {
-	SampleHandler = sampleHandler
-}
-
-func initUserHandler(userHandler *TUserHandler) {
-	UserHandler = userHandler
-}

@@ -16,6 +16,10 @@ var (
 	UserHandler ihandler.IUserHandler
 )
 
+func initUserHandler(userHandler *TUserHandler) {
+	UserHandler = userHandler
+}
+
 func (h *TUserHandler) GetUser(c echo.Context) error {
 	id := c.Param("id")
 	user, err := h.UserService.GetUser(id)

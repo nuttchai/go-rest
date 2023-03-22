@@ -7,9 +7,9 @@ import (
 	"testing"
 
 	"github.com/labstack/echo"
-	"github.com/nuttchai/go-rest/internal/constant"
 	mhandler "github.com/nuttchai/go-rest/internal/handler/mock"
 	"github.com/nuttchai/go-rest/internal/model"
+	mhttp "github.com/nuttchai/go-rest/internal/util/mock"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,13 +26,6 @@ func init() {
 	}
 }
 
-func setUpRequest(method string, subPath string) *http.Request {
-	path := constant.LocalHost + constant.BasePath + subPath
-	req := httptest.NewRequest(method, path, nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	return req
-}
-
 func TestTestReturn(t *testing.T) {
 	// Arrange
 	mhandler.TestMock = func() string {
@@ -42,7 +35,7 @@ func TestTestReturn(t *testing.T) {
 	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
-	req := setUpRequest(echo.GET, "/sample")
+	req := mhttp.SetupMockRequest(echo.GET, "/sample")
 	c := e.NewContext(req, rec)
 
 	// Act
@@ -74,7 +67,7 @@ func TestGetSampleReturn(t *testing.T) {
 	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
-	req := setUpRequest(echo.GET, "/sample/1")
+	req := mhttp.SetupMockRequest(echo.GET, "/sample/1")
 
 	c := e.NewContext(req, rec)
 
@@ -97,7 +90,7 @@ func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
 	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
-	req := setUpRequest(echo.GET, "/sample/1")
+	req := mhttp.SetupMockRequest(echo.GET, "/sample/1")
 
 	c := e.NewContext(req, rec)
 
@@ -127,7 +120,7 @@ func TestGetSampleReturnErrorFromGetUser(t *testing.T) {
 	initSampleHandler(handlerMock)
 
 	rec := httptest.NewRecorder()
-	req := setUpRequest(echo.GET, "/sample/1")
+	req := mhttp.SetupMockRequest(echo.GET, "/sample/1")
 	c := e.NewContext(req, rec)
 
 	// Act

@@ -22,6 +22,10 @@ var (
 	SampleHandler ihandler.ISampleHandler
 )
 
+func initSampleHandler(sampleHandler *TSampleHandler) {
+	SampleHandler = sampleHandler
+}
+
 func (h *TSampleHandler) Test(c echo.Context) error {
 	resultTest := h.SampleService.Test()
 	res := api.SuccessResponse(resultTest, constant.TestSuccessMsg)
