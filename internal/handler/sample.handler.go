@@ -22,8 +22,8 @@ var (
 	SampleHandler ihandler.ISampleHandler
 )
 
-func initSampleHandler(h *TSampleHandler) {
-	SampleHandler = h
+func initSampleHandler(sampleHandler *TSampleHandler) {
+	SampleHandler = sampleHandler
 }
 
 func (h *TSampleHandler) Test(c echo.Context) error {

@@ -16,8 +16,8 @@ var (
 	UserHandler ihandler.IUserHandler
 )
 
-func initUserHandler(h *TUserHandler) {
-	UserHandler = h
+func initUserHandler(userHandler *TUserHandler) {
+	UserHandler = userHandler
 }
 
 func (h *TUserHandler) GetUser(c echo.Context) error {
