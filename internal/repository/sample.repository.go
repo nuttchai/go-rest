@@ -6,7 +6,6 @@ import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
-	"github.com/nuttchai/go-rest/internal/shared/config"
 	"github.com/nuttchai/go-rest/internal/shared/console"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/util/context"
@@ -21,10 +20,8 @@ var (
 	SampleRepository irepository.ISampleRepository
 )
 
-func initSampleRepository() {
-	SampleRepository = &TSampleRepository{
-		DB: config.GetAppDB(),
-	}
+func initSampleRepository(sampleRepository *TSampleRepository) {
+	SampleRepository = sampleRepository
 }
 
 func (m *TSampleRepository) Test() string {
