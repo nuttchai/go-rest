@@ -3,7 +3,6 @@ package service
 import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
-	"github.com/nuttchai/go-rest/internal/repository"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/util/validators"
@@ -17,10 +16,8 @@ var (
 	SampleService iservice.ISampleService
 )
 
-func initSampleService() {
-	SampleService = &TSampleService{
-		Repository: repository.SampleRepository,
-	}
+func initSampleService(sampleService *TSampleService) {
+	SampleService = sampleService
 }
 
 func (s *TSampleService) Test() string {
