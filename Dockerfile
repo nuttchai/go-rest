@@ -29,7 +29,7 @@ COPY --from=builder /app/.env .
 ENV ENV_PATH .env
 
 # Expose application port
-EXPOSE 8080
+EXPOSE 8000
 
 # Run the application
 CMD [ "./main" ]
