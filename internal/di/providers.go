@@ -1,25 +1,28 @@
-package internal
+//go:generate go run github.com/google/wire/cmd/wire
+
+package di
 
 import (
 	"database/sql"
-	"flag"
 	"fmt"
 
 	"github.com/labstack/echo"
+	_ "github.com/lib/pq"
 	"github.com/nuttchai/go-rest/internal/constant"
-	"github.com/nuttchai/go-rest/internal/handler"
-	"github.com/nuttchai/go-rest/internal/repository"
+	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
+	"github.com/nuttchai/go-rest/internal/middleware"
 	"github.com/nuttchai/go-rest/internal/router"
-	"github.com/nuttchai/go-rest/internal/service"
 	"github.com/nuttchai/go-rest/internal/types"
 	"github.com/nuttchai/go-rest/internal/util/context"
 	"github.com/nuttchai/go-rest/internal/util/env"
 )
 
-func initEnv() (*types.TAPIConfig, error) {
-	apiConfig := &types.TAPIConfig{}
+type App struct {
+	Server *echo.Echo
+	Config *types.TAPIConfig
+}
 
-	// Load Environment Variables
+func ProvideAPIConfig() (*types.TAPIConfig, error) {
 	appEnv := env.GetEnv("APP_ENV", "development")
 	envDefaultDir, err := env.GetDefaultEnvDir(appEnv)
 	if err != nil {
@@ -37,6 +40,7 @@ func initEnv() (*types.TAPIConfig, error) {
 	dbName := env.GetEnv("APP_DB_NAME", "test")
 	dbDriver := env.GetEnv("DB_DRIVER", "postgres")
 	port := env.GetEnv("APP_PORT", "8000")
+
 	dbConnStr := fmt.Sprintf(
 		"%s://%s:%s@%s:%s/%s?sslmode=disable",
 		dbType,
@@ -47,36 +51,47 @@ func initEnv() (*types.TAPIConfig, error) {
 		dbName,
 	)
 
-	// Store ENV Variables to ApiConfig
-	flag.StringVar(&apiConfig.Env, "env", appEnv, "Application Environment")
-	flag.StringVar(&apiConfig.Port, "port", port, "Server Listening Port")
-	flag.StringVar(&apiConfig.Db.Dsn, "dsn", dbConnStr, "Data Source Name")
-	flag.StringVar(&apiConfig.Db.Driver, "driver", dbDriver, "Database Driver")
-	flag.Parse()
+	cfg := &types.TAPIConfig{
+		Port: port,
+		Env:  appEnv,
+	}
+	cfg.Db.Dsn = dbConnStr
+	cfg.Db.Driver = dbDriver
 
-	return apiConfig, nil
+	return cfg, nil
 }
 
-func initSqlDB(cfg *types.TAPIConfig) (*sql.DB, error) {
+func ProvideDatabase(cfg *types.TAPIConfig) (*sql.DB, func(), error) {
 	db, err := sql.Open(cfg.Db.Driver, cfg.Db.Dsn)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	ctx, cancel := context.WithTimeout(constant.InitConnectionTimeout)
 	defer cancel()
 
-	err = db.PingContext(ctx)
-	if err != nil {
-		return nil, err
+	if err := db.PingContext(ctx); err != nil {
+		_ = db.Close()
+		return nil, nil, err
 	}
 
-	return db, nil
+	cleanup := func() {
+		_ = db.Close()
+	}
+
+	return db, cleanup, nil
 }
 
-func initApp(e *echo.Echo) {
-	repository.Init()
-	service.Init()
-	handler.Init()
-	router.Init(e)
+func ProvideServer(sampleHandler ihandler.ISampleHandler, userHandler ihandler.IUserHandler) *echo.Echo {
+	e := echo.New()
+	middleware.EnableCORS(e)
+	router.Register(e, sampleHandler, userHandler)
+	return e
+}
+
+func NewApp(server *echo.Echo, cfg *types.TAPIConfig) *App {
+	return &App{
+		Server: server,
+		Config: cfg,
+	}
 }

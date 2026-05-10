@@ -5,7 +5,6 @@ import (
 
 	"github.com/nuttchai/go-rest/internal/constant"
 	"github.com/nuttchai/go-rest/internal/model"
-	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
 	"github.com/nuttchai/go-rest/internal/util/context"
 )
 
@@ -13,12 +12,10 @@ type TUserRepository struct {
 	DB *sql.DB
 }
 
-var (
-	UserRepository irepository.IUserRepository
-)
-
-func initUserRepository(userRepository *TUserRepository) {
-	UserRepository = userRepository
+func NewUserRepository(db *sql.DB) *TUserRepository {
+	return &TUserRepository{
+		DB: db,
+	}
 }
 
 func (m *TUserRepository) RetrieveOne(id string) (*model.User, error) {

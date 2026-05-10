@@ -20,10 +20,10 @@ var (
 
 func init() {
 	e = echo.New()
-	handlerMock = &TSampleHandler{
-		SampleService: &mhandler.TSampleServiceMock{},
-		UserService:   &mhandler.TUserServiceMock{},
-	}
+	handlerMock = NewSampleHandler(
+		&mhandler.TSampleServiceMock{},
+		&mhandler.TUserServiceMock{},
+	)
 }
 
 func TestTestReturn(t *testing.T) {
@@ -32,14 +32,12 @@ func TestTestReturn(t *testing.T) {
 		return "test"
 	}
 
-	initSampleHandler(handlerMock)
-
 	rec := httptest.NewRecorder()
 	req := mhttp.SetupMockRequest(echo.GET, "/sample")
 	c := e.NewContext(req, rec)
 
 	// Act
-	err := SampleHandler.Test(c)
+	err := handlerMock.Test(c)
 
 	// Assert
 	assert.Nil(t, err)
@@ -64,15 +62,13 @@ func TestGetSampleReturn(t *testing.T) {
 		}, nil
 	}
 
-	initSampleHandler(handlerMock)
-
 	rec := httptest.NewRecorder()
 	req := mhttp.SetupMockRequest(echo.GET, "/sample/1")
 
 	c := e.NewContext(req, rec)
 
 	// Act
-	err := SampleHandler.GetSample(c)
+	err := handlerMock.GetSample(c)
 
 	// Assert
 	assert.Nil(t, err)
@@ -87,15 +83,13 @@ func TestGetSampleReturnErrorFromGetSample(t *testing.T) {
 		return nil, errors.New("error")
 	}
 
-	initSampleHandler(handlerMock)
-
 	rec := httptest.NewRecorder()
 	req := mhttp.SetupMockRequest(echo.GET, "/sample/1")
 
 	c := e.NewContext(req, rec)
 
 	// Act
-	err := SampleHandler.GetSample(c)
+	err := handlerMock.GetSample(c)
 
 	// Assert
 	assert.Nil(t, err)
@@ -117,14 +111,12 @@ func TestGetSampleReturnErrorFromGetUser(t *testing.T) {
 		return nil, errors.New("error")
 	}
 
-	initSampleHandler(handlerMock)
-
 	rec := httptest.NewRecorder()
 	req := mhttp.SetupMockRequest(echo.GET, "/sample/1")
 	c := e.NewContext(req, rec)
 
 	// Act
-	err := SampleHandler.GetSample(c)
+	err := handlerMock.GetSample(c)
 
 	// Assert
 	assert.Nil(t, err)

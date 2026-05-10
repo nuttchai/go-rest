@@ -7,7 +7,6 @@ import (
 	"github.com/nuttchai/go-rest/internal/constant"
 	sampledto "github.com/nuttchai/go-rest/internal/dto/sample"
 	shareddto "github.com/nuttchai/go-rest/internal/dto/shared"
-	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/util/api"
 	jsonGen "github.com/nuttchai/go-rest/internal/util/json"
@@ -18,12 +17,11 @@ type TSampleHandler struct {
 	UserService   iservice.IUserService
 }
 
-var (
-	SampleHandler ihandler.ISampleHandler
-)
-
-func initSampleHandler(sampleHandler *TSampleHandler) {
-	SampleHandler = sampleHandler
+func NewSampleHandler(sampleService iservice.ISampleService, userService iservice.IUserService) *TSampleHandler {
+	return &TSampleHandler{
+		SampleService: sampleService,
+		UserService:   userService,
+	}
 }
 
 func (h *TSampleHandler) Test(c echo.Context) error {

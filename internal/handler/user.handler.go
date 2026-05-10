@@ -3,7 +3,6 @@ package handler
 import (
 	"github.com/labstack/echo"
 	"github.com/nuttchai/go-rest/internal/constant"
-	ihandler "github.com/nuttchai/go-rest/internal/handler/interface"
 	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/util/api"
 )
@@ -12,12 +11,10 @@ type TUserHandler struct {
 	UserService iservice.IUserService
 }
 
-var (
-	UserHandler ihandler.IUserHandler
-)
-
-func initUserHandler(userHandler *TUserHandler) {
-	UserHandler = userHandler
+func NewUserHandler(userService iservice.IUserService) *TUserHandler {
+	return &TUserHandler{
+		UserService: userService,
+	}
 }
 
 func (h *TUserHandler) GetUser(c echo.Context) error {

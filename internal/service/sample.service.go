@@ -4,7 +4,6 @@ import (
 	dto "github.com/nuttchai/go-rest/internal/dto/sample"
 	"github.com/nuttchai/go-rest/internal/model"
 	irepository "github.com/nuttchai/go-rest/internal/repository/interface"
-	iservice "github.com/nuttchai/go-rest/internal/service/interface"
 	"github.com/nuttchai/go-rest/internal/util/validators"
 )
 
@@ -12,12 +11,10 @@ type TSampleService struct {
 	Repository irepository.ISampleRepository
 }
 
-var (
-	SampleService iservice.ISampleService
-)
-
-func initSampleService(sampleService *TSampleService) {
-	SampleService = sampleService
+func NewSampleService(repository irepository.ISampleRepository) *TSampleService {
+	return &TSampleService{
+		Repository: repository,
+	}
 }
 
 func (s *TSampleService) Test() string {
